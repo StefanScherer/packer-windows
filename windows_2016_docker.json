@@ -43,7 +43,7 @@
       "winrm_timeout": "6h",
       "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c \"Packer Shutdown\"",
       "guest_os_type": "windows8srv-64",
-      "disk_size": 61440,
+      "disk_size": 31440,
       "vnc_port_min": 5900,
       "vnc_port_max": 5980,
       "version": 11,
@@ -128,9 +128,9 @@
     },
     {
       "type": "powershell",
+      "execute_command": "powershell \"& { {{.Vars}}{{.Path}}; exit $LastExitCode}\"",
       "scripts": [
         "./scripts/docker/install-docker.ps1",
-        "./scripts/docker/patch-boot-time-for-containers.ps1",
         "./scripts/docker/enable-docker-insecure.ps1",
         "./scripts/docker/add-docker-group.ps1",
         "./scripts/docker/remove-docker-key-json.ps1"
@@ -140,9 +140,7 @@
       "type": "windows-shell",
       "scripts": [
         "./scripts/set-winrm-automatic.bat",
-        "./scripts/uac-enable.bat",
-        "./scripts/compile-dotnet-assemblies.bat",
-        "./scripts/compact.bat"
+        "./scripts/uac-enable.bat"
       ]
     }
   ],

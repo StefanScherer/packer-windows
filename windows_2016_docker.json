@@ -15,8 +15,12 @@
         "./floppy/PinTo10.exe",
         "./scripts/disable-screensaver.ps1",
         "./scripts/disable-winrm.ps1",
+<<<<<<< HEAD
         "./scripts/docker/enable-winrm.ps1",
         "./scripts/docker/2016/install-containers-feature.ps1",
+=======
+        "./scripts/enable-winrm.ps1",
+>>>>>>> Use OneGet package to install Docker
         "./scripts/microsoft-updates.bat",
         "./scripts/win-updates.ps1"
       ],
@@ -55,8 +59,12 @@
         "./floppy/PinTo10.exe",
         "./scripts/disable-screensaver.ps1",
         "./scripts/disable-winrm.ps1",
+<<<<<<< HEAD
         "./scripts/docker/enable-winrm.ps1",
         "./scripts/docker/2016/install-containers-feature.ps1",
+=======
+        "./scripts/enable-winrm.ps1",
+>>>>>>> Use OneGet package to install Docker
         "./scripts/microsoft-updates.bat",
         "./scripts/win-updates.ps1"
       ],
@@ -65,8 +73,12 @@
         "RemoteDisplay.vnc.port": "5900",
         "memsize": "2048",
         "numvcpus": "2",
+<<<<<<< HEAD
         "scsi0.virtualDev": "lsisas1068",
         "vhv.enable": "FALSE"
+=======
+        "scsi0.virtualDev": "lsisas1068"
+>>>>>>> Use OneGet package to install Docker
       }
     },
     {
@@ -92,8 +104,12 @@
         "./floppy/PinTo10.exe",
         "./scripts/disable-screensaver.ps1",
         "./scripts/disable-winrm.ps1",
+<<<<<<< HEAD
         "./scripts/docker/enable-winrm.ps1",
         "./scripts/docker/2016/install-containers-feature.ps1",
+=======
+        "./scripts/enable-winrm.ps1",
+>>>>>>> Use OneGet package to install Docker
         "./scripts/microsoft-updates.bat",
         "./scripts/win-updates.ps1",
         "./scripts/oracle-cert.cer"
@@ -126,7 +142,12 @@
     {
       "type": "powershell",
       "scripts": [
+<<<<<<< HEAD
         "./scripts/debloat-windows.ps1"
+=======
+        "./scripts/docker/install-docker.ps1",
+        "./scripts/docker/add-docker-group.ps1"
+>>>>>>> Use OneGet package to install Docker
       ]
     },
     {
@@ -143,9 +164,13 @@
     {
       "type": "powershell",
       "scripts": [
+<<<<<<< HEAD
         "./scripts/docker/add-docker-group.ps1",
         "./scripts/docker/2016/install-docker.ps1",
         "./scripts/docker/docker-pull-async.ps1",
+=======
+        "./scripts/docker/docker-pull-baseimages.ps1",
+>>>>>>> Use OneGet package to install Docker
         "./scripts/docker/open-docker-insecure-port.ps1",
         "./scripts/docker/remove-docker-key-json.ps1",
         "./scripts/docker/disable-windows-defender.ps1"

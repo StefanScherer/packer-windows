@@ -22,7 +22,7 @@ The following Windows versions are known to work (built with VMware Fusion Pro 8
 
  * Windows 10
  * Windows Server 2016
- * Windows Server 2016 with Hyper-V and Docker -> see [docker-windows-box](https://github.com/StefanScherer/docker-windows-box) for an use case
+ * Windows Server 2016 and Docker -> see [docker-windows-box](https://github.com/StefanScherer/docker-windows-box) for an use case
 
 You may find other packer template files, but older versions of Windows doesn't work so nice with a Retina display.
 

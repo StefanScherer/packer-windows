@@ -12,5 +12,3 @@ function DockerPull {
   $results
 }
 
-DockerPull microsoft/windowsservercore
-DockerPull microsoft/nanoserver

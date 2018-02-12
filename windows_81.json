@@ -1,143 +1,124 @@
 {
   "builders": [
     {
-      "type": "vmware-iso",
-      "iso_url": "{{user `iso_url`}}",
-      "iso_checksum_type": "{{user `iso_checksum_type`}}",
-      "iso_checksum": "{{user `iso_checksum`}}",
-      "headless": "{{user `headless`}}",
       "boot_wait": "2m",
-      "ssh_username": "vagrant",
-      "ssh_password": "vagrant",
-      "ssh_wait_timeout": "2h",
-      "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c \"Packer Shutdown\"",
-      "guest_os_type": "windows8srv-64",
-      "tools_upload_flavor": "windows",
-      "disk_size": "{{user `disk_size`}}",
-      "vnc_port_min": 5900,
-      "vnc_port_max": 5980,
+      "disk_size": 61440,
       "floppy_files": [
-        "{{user `autounattend`}}",
+        "./answer_files/81/Autounattend.xml",
         "./scripts/microsoft-updates.bat",
         "./scripts/win-updates.ps1",
         "./scripts/openssh.ps1"
       ],
+      "guest_os_type": "windows8-64",
+      "headless": true,
+      "iso_checksum": "5e4ecb86fd8619641f1d58f96e8561ec",
+      "iso_checksum_type": "md5",
+      "iso_url": "http://download.microsoft.com/download/B/9/9/B999286E-0A47-406D-8B3D-5B5AD7373A4A/9600.16384.WINBLUE_RTM.130821-1623_X64FRE_ENTERPRISE_EVAL_EN-US-IRM_CENA_X64FREE_EN-US_DV5.ISO",
+      "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c \"Packer Shutdown\"",
+      "ssh_password": "vagrant",
+      "ssh_username": "vagrant",
+      "ssh_wait_timeout": "4h",
+      "tools_upload_flavor": "windows",
+      "type": "vmware-iso",
       "vmx_data": {
         "RemoteDisplay.vnc.enabled": "false",
         "RemoteDisplay.vnc.port": "5900",
-        "memsize": "{{user `memory_size`}}",
-        "numvcpus": "{{user `cpus`}}",
+        "memsize": "2048",
+        "numvcpus": "2",
         "scsi0.virtualDev": "lsisas1068"
-      }
+      },
+      "vmx_remove_ethernet_interfaces": true,
+      "vnc_port_max": 5980,
+      "vnc_port_min": 5900
     },
     {
-      "type": "virtualbox-iso",
-      "iso_url": "{{user `iso_url`}}",
-      "iso_checksum_type": "{{user `iso_checksum_type`}}",
-      "iso_checksum": "{{user `iso_checksum`}}",
-      "headless": "{{user `headless`}}",
       "boot_wait": "2m",
-      "ssh_username": "vagrant",
-      "ssh_password": "vagrant",
-      "ssh_wait_timeout": "2h",
-      "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c \"Packer Shutdown\"",
-      "guest_os_type": "Windows81_64",
-      "disk_size": "{{user `disk_size`}}",
+      "disk_size": 61440,
       "floppy_files": [
-        "{{user `autounattend`}}",
+        "./answer_files/81/Autounattend.xml",
         "./scripts/microsoft-updates.bat",
         "./scripts/win-updates.ps1",
         "./scripts/openssh.ps1"
       ],
+      "guest_os_type": "Windows81_64",
+      "headless": false,
+      "iso_checksum": "5e4ecb86fd8619641f1d58f96e8561ec",
+      "iso_checksum_type": "md5",
+      "iso_url": "http://download.microsoft.com/download/B/9/9/B999286E-0A47-406D-8B3D-5B5AD7373A4A/9600.16384.WINBLUE_RTM.130821-1623_X64FRE_ENTERPRISE_EVAL_EN-US-IRM_CENA_X64FREE_EN-US_DV5.ISO",
+      "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c \"Packer Shutdown\"",
+      "ssh_password": "vagrant",
+      "ssh_username": "vagrant",
+      "ssh_wait_timeout": "4h",
+      "type": "virtualbox-iso",
       "vboxmanage": [
         [
           "modifyvm",
           "{{.Name}}",
           "--memory",
-          "{{user `memory_size`}}"
+          "2048"
         ],
         [
           "modifyvm",
           "{{.Name}}",
           "--cpus",
-          "{{user `cpus`}}"
+          "2"
+        ],
+        [
+          "modifyvm",
+          "{{.Name}}",
+          "--vrdeaddress",
+          "127.0.0.1"
+        ],
+        [
+          "modifyvm",
+          "{{.Name}}",
+          "--vrdeport",
+          "13389"
+        ],
+        [
+          "modifyvm",
+          "{{.Name}}",
+          "--vcpenabled",
+          "off"
+        ],
+        [
+          "modifyvm",
+          "{{.Name}}",
+          "--vcpfile",
+          "windows_81.webm"
         ]
-      ]
-    },
-    {
-      "type": "parallels-iso",
-      "iso_url": "{{user `iso_url`}}",
-      "iso_checksum_type": "{{user `iso_checksum_type`}}",
-      "iso_checksum": "{{user `iso_checksum`}}",
-      "boot_wait": "2m",
-      "ssh_username": "vagrant",
-      "ssh_password": "vagrant",
-      "ssh_wait_timeout": "2h",
-      "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c \"Packer Shutdown\"",
-      "guest_os_type": "win-8.1",
-      "parallels_tools_flavor": "win",
-      "disk_size": "{{user `disk_size`}}",
-      "floppy_files": [
-        "{{user `autounattend`}}",
-        "./scripts/microsoft-updates.bat",
-        "./scripts/win-updates.ps1",
-        "./scripts/openssh.ps1"
-      ],
-      "prlctl": [
-        [
-          "set", "{{.Name}}",
-          "--memsize", "{{user `memory_size`}}"
-        ],
-        [
-          "set", "{{.Name}}",
-          "--cpus", "{{user `cpus`}}"
-        ],
-        [
-          "set", "{{.Name}}",
-          "--winsystray-in-macmenu", "off"
-        ],
-        [
-          "set", "{{.Name}}",
-          "--startup-view", "window"
-        ],
-        [
-          "set", "{{.Name}}",
-          "--efi-boot", "off"
-        ]
-      ]
-    }
-  ],
-  "provisioners": [
-    {
-      "type": "shell",
-      "remote_path": "/tmp/script.bat",
-      "execute_command": "{{.Vars}} cmd /c C:/Windows/Temp/script.bat",
-      "scripts": [
-        "./scripts/vm-guest-tools.bat",
-        "./scripts/vagrant-ssh.bat",
-        "./scripts/disable-auto-logon.bat",
-        "./scripts/enable-rdp.bat",
-        "./scripts/compile-dotnet-assemblies.bat",
-        "./scripts/compact.bat"
       ]
     }
   ],
   "post-processors": [
     {
-      "type": "vagrant",
       "keep_input_artifact": false,
       "output": "windows_81_{{.Provider}}.box",
+      "type": "vagrant",
       "vagrantfile_template": "vagrantfile-windows_81.template"
     }
   ],
-  "variables": {
-    "iso_url": "http://download.microsoft.com/download/B/9/9/B999286E-0A47-406D-8B3D-5B5AD7373A4A/9600.16384.WINBLUE_RTM.130821-1623_X64FRE_ENTERPRISE_EVAL_EN-US-IRM_CENA_X64FREE_EN-US_DV5.ISO",
-    "iso_checksum_type": "md5",
-    "iso_checksum": "5e4ecb86fd8619641f1d58f96e8561ec",
-    "autounattend": "./answer_files/81/Autounattend.xml",
-    "headless": "true",
-    "cpus": "2",
-    "memory_size": "2048",
-    "disk_size": "61440"
-  }
+  "provisioners": [
+    {
+      "execute_command": "{{.Vars}} cmd /c C:/Windows/Temp/script.bat",
+      "remote_path": "/tmp/script.bat",
+      "scripts": [
+        "./scripts/vm-guest-tools.bat",
+        "./scripts/chef.bat",
+        "./scripts/vagrant-ssh.bat",
+        "./scripts/disable-auto-logon.bat",
+        "./scripts/enable-rdp.bat",
+        "./scripts/compile-dotnet-assemblies.bat",
+        "./scripts/compact.bat"
+      ],
+      "type": "shell"
+    },
+    {
+      "inline": [
+        "rm -rf /tmp/*"
+      ],
+      "type": "shell"
+    }
+  ]
 }
+

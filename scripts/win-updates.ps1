@@ -1,7 +1,8 @@
 param($global:RestartRequired=0,
         $global:MoreUpdates=0,
         $global:MaxCycles=5,
-        $MaxUpdatesPerCycle=500)
+        $MaxUpdatesPerCycle=500,
+        $BeginWithRestart=0)
 
 $Logfile = "C:\Windows\Temp\win-updates.log"
 
@@ -30,10 +31,10 @@ function Check-ContinueRestartOrEnd() {
                 Install-WindowsUpdates
             } elseif ($script:Cycles -gt $global:MaxCycles) {
                 LogWrite "Exceeded Cycle Count - Stopping"
-                Invoke-Expression "a:\openssh.ps1 -AutoStart"
+                Invoke-Expression "a:\enable-winrm.ps1"
             } else {
                 LogWrite "Done Installing Windows Updates"
-                Invoke-Expression "a:\openssh.ps1 -AutoStart"
+                Invoke-Expression "a:\enable-winrm.ps1"
             }
         }
         1 {
@@ -125,7 +126,7 @@ function Install-WindowsUpdates() {
         LogWrite 'No updates available to install...'
         $global:MoreUpdates=0
         $global:RestartRequired=0
-        Invoke-Expression "a:\openssh.ps1 -AutoStart"
+        Invoke-Expression "a:\enable-winrm.ps1"
         break
     }
 
@@ -224,10 +225,14 @@ $script:SearchResult = New-Object -ComObject 'Microsoft.Update.UpdateColl'
 $script:Cycles = 0
 $script:CycleUpdateCount = 0
 
+if ($BeginWithRestart) {
+  $global:RestartRequired = 1
+  Check-ContinueRestartOrEnd
+}
+
 Check-WindowsUpdates
 if ($global:MoreUpdates -eq 1) {
     Install-WindowsUpdates
 } else {
     Check-ContinueRestartOrEnd
 }
-

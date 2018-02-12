@@ -1,143 +1,100 @@
 {
   "builders": [
     {
-      "type": "vmware-iso",
-      "iso_url": "{{user `iso_url`}}",
-      "iso_checksum_type": "{{user `iso_checksum_type`}}",
-      "iso_checksum": "{{user `iso_checksum`}}",
-      "headless": "{{user `headless`}}",
       "boot_wait": "2m",
-      "ssh_username": "vagrant",
-      "ssh_password": "vagrant",
-      "ssh_wait_timeout": "6h",
-      "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c \"Packer Shutdown\"",
-      "guest_os_type": "windows8srv-64",
-      "tools_upload_flavor": "windows",
-      "disk_size": "{{user `disk_size`}}",
-      "vnc_port_min": 5900,
-      "vnc_port_max": 5980,
+      "communicator": "winrm",
+      "disk_size": 61440,
       "floppy_files": [
         "{{user `autounattend`}}",
+        "./scripts/disable-winrm.ps1",
+        "./scripts/enable-winrm.ps1",
         "./scripts/microsoft-updates.bat",
-        "./scripts/win-updates.ps1",
-        "./scripts/openssh.ps1"
+        "./scripts/win-updates.ps1"
       ],
+      "guest_os_type": "windows8srv-64",
+      "headless": true,
+      "iso_checksum": "{{user `iso_checksum`}}",
+      "iso_checksum_type": "{{user `iso_checksum_type`}}",
+      "iso_url": "{{user `iso_url`}}",
+      "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c \"Packer Shutdown\"",
+      "type": "vmware-iso",
       "vmx_data": {
         "RemoteDisplay.vnc.enabled": "false",
         "RemoteDisplay.vnc.port": "5900",
-        "memsize": "{{user `memory_size`}}",
-        "numvcpus": "{{user `cpus`}}",
+        "memsize": "2048",
+        "numvcpus": "2",
         "scsi0.virtualDev": "lsisas1068"
-      }
+      },
+      "vmx_remove_ethernet_interfaces": true,
+      "vnc_port_max": 5980,
+      "vnc_port_min": 5900,
+      "winrm_password": "vagrant",
+      "winrm_timeout": "6h",
+      "winrm_username": "vagrant"
     },
     {
-      "type": "virtualbox-iso",
-      "iso_url": "{{user `iso_url`}}",
-      "iso_checksum_type": "{{user `iso_checksum_type`}}",
-      "iso_checksum": "{{user `iso_checksum`}}",
-      "headless": "{{user `headless`}}",
       "boot_wait": "2m",
-      "ssh_username": "vagrant",
-      "ssh_password": "vagrant",
-      "ssh_wait_timeout": "6h",
-      "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c \"Packer Shutdown\"",
-      "guest_os_type": "Windows2012_64",
-      "disk_size": "{{user `disk_size`}}",
+      "communicator": "winrm",
+      "disk_size": 61440,
       "floppy_files": [
         "{{user `autounattend`}}",
+        "./scripts/disable-winrm.ps1",
+        "./scripts/enable-winrm.ps1",
         "./scripts/microsoft-updates.bat",
-        "./scripts/win-updates.ps1",
-        "./scripts/openssh.ps1"
+        "./scripts/win-updates.ps1"
       ],
+      "guest_additions_mode": "disable",
+      "guest_os_type": "Windows2012_64",
+      "headless": true,
+      "iso_checksum": "{{user `iso_checksum`}}",
+      "iso_checksum_type": "{{user `iso_checksum_type`}}",
+      "iso_url": "{{user `iso_url`}}",
+      "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c \"Packer Shutdown\"",
+      "type": "virtualbox-iso",
       "vboxmanage": [
         [
           "modifyvm",
           "{{.Name}}",
           "--memory",
-          "{{user `memory_size`}}"
+          "2048"
         ],
         [
           "modifyvm",
           "{{.Name}}",
           "--cpus",
-          "{{user `cpus`}}"
+          "2"
         ]
-      ]
-    },
-    {
-      "type": "parallels-iso",
-      "iso_url": "{{user `iso_url`}}",
-      "iso_checksum_type": "{{user `iso_checksum_type`}}",
-      "iso_checksum": "{{user `iso_checksum`}}",
-      "boot_wait": "2m",
-      "ssh_username": "vagrant",
-      "ssh_password": "vagrant",
-      "ssh_wait_timeout": "6h",
-      "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c \"Packer Shutdown\"",
-      "guest_os_type": "win-2012",
-      "parallels_tools_flavor": "win",
-      "disk_size": "{{user `disk_size`}}",
-      "floppy_files": [
-        "{{user `autounattend`}}",
-        "./scripts/microsoft-updates.bat",
-        "./scripts/win-updates.ps1",
-        "./scripts/openssh.ps1"
       ],
-      "prlctl": [
-        [
-          "set", "{{.Name}}",
-          "--memsize", "{{user `memory_size`}}"
-        ],
-        [
-          "set", "{{.Name}}",
-          "--cpus", "{{user `cpus`}}"
-        ],
-        [
-          "set", "{{.Name}}",
-          "--winsystray-in-macmenu", "off"
-        ],
-        [
-          "set", "{{.Name}}",
-          "--startup-view", "window"
-        ],
-        [
-          "set", "{{.Name}}",
-          "--efi-boot", "off"
-        ]
-      ]
-    }
-  ],
-  "provisioners": [
-    {
-      "type": "shell",
-      "remote_path": "/tmp/script.bat",
-      "execute_command": "{{.Vars}} cmd /c C:/Windows/Temp/script.bat",
-      "scripts": [
-        "./scripts/vm-guest-tools.bat",
-        "./scripts/vagrant-ssh.bat",
-        "./scripts/disable-auto-logon.bat",
-        "./scripts/enable-rdp.bat",
-        "./scripts/compile-dotnet-assemblies.bat",
-        "./scripts/compact.bat"
-      ]
+      "winrm_password": "vagrant",
+      "winrm_timeout": "6h",
+      "winrm_username": "vagrant"
     }
   ],
   "post-processors": [
     {
-      "type": "vagrant",
       "keep_input_artifact": false,
       "output": "windows_2012_r2_core_{{.Provider}}.box",
+      "type": "vagrant",
       "vagrantfile_template": "vagrantfile-windows_2012_r2.template"
     }
   ],
+  "provisioners": [
+    {
+      "scripts": [
+        "./scripts/vm-guest-tools.bat",
+        "./scripts/enable-rdp.bat",
+        "./scripts/compile-dotnet-assemblies.bat",
+        "./scripts/disable-auto-logon.bat",
+        "./scripts/compact.bat"
+      ],
+      "type": "windows-shell"
+    }
+  ],
   "variables": {
-    "iso_url": "http://download.microsoft.com/download/6/2/A/62A76ABB-9990-4EFC-A4FE-C7D698DAEB96/9600.16384.WINBLUE_RTM.130821-1623_X64FRE_SERVER_EVAL_EN-US-IRM_SSS_X64FREE_EN-US_DV5.ISO",
-    "iso_checksum_type": "md5",
-    "iso_checksum": "458ff91f8abc21b75cb544744bf92e6a",
     "autounattend": "./answer_files/2012_r2_core/Autounattend.xml",
-    "headless": "true",
-    "cpus": "2",
-    "memory_size": "2048",
-    "disk_size": "61440"
+    "iso_checksum": "5b5e08c490ad16b59b1d9fab0def883a",
+    "iso_checksum_type": "md5",
+    "iso_url": "http://care.dlservice.microsoft.com/dl/download/6/2/A/62A76ABB-9990-4EFC-A4FE-C7D698DAEB96/9600.17050.WINBLUE_REFRESH.140317-1640_X64FRE_SERVER_EVAL_EN-US-IR3_SSS_X64FREE_EN-US_DV9.ISO"
   }
 }
+

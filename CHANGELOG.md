@@ -1,18 +1,5 @@
 ## Unreleased
-* Fixed issue with Console Output in win-updates.ps1 (#245)
-* Added Windows 2016 build (#243)
-* Use VBox certs from guest addition (#247, #250)
-* Improve Windows 10 (#236)
-* Add more build variables (#228)
-* Increase 2008R2 timeouts (#206)
-
-## v1.25 (August 13th, 2015)
-
-* Updated 7-Zip, UltraDefrag URLs (#154)
-* Added Windows 10 build (#149, #163)
-* Updated VMware Tools to 9.9.3 (#162)
-* Improved update script (#164)
-* Increased memory for WinRM shell (#165)
+* Fixed issue with Console Output (#245)
 
 ## v1.24 (June 8th, 2015)
 

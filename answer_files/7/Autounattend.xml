@@ -60,11 +60,11 @@
             <SetupUILanguage>
                 <UILanguage>en-US</UILanguage>
             </SetupUILanguage>
-            <InputLocale>en-US</InputLocale>
-            <SystemLocale>en-US</SystemLocale>
+            <InputLocale>de-DE</InputLocale>
+            <SystemLocale>de-DE</SystemLocale>
             <UILanguage>en-US</UILanguage>
             <UILanguageFallback>en-US</UILanguageFallback>
-            <UserLocale>en-US</UserLocale>
+            <UserLocale>de-DE</UserLocale>
         </component>
     </settings>
     <settings pass="offlineServicing">
@@ -237,7 +237,7 @@
                 <SynchronousCommand wcm:action="add">
                     <CommandLine>cmd.exe /c C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -File a:\dis-updates.ps1</CommandLine>
                     <Description>Disable Automatic Updates</Description>
-                    <Order>96</Order>
+                    <Order>97</Order>
                     <RequiresUserInput>true</RequiresUserInput>
                 </SynchronousCommand>
                 <SynchronousCommand wcm:action="add">
@@ -249,19 +249,14 @@
                 -->
                 <!-- END WITHOUT WINDOWS UPDATES -->
                 <!-- WITH WINDOWS UPDATES -->
-                <!-- Disable automatic updates so the system update process doesn't interfere with the update script -->
                 <SynchronousCommand wcm:action="add">
-                    <CommandLine>cmd.exe /c a:\hotfix-KB3102810.bat</CommandLine>
+                    <CommandLine>cmd.exe /c C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -File a:\dis-updates.ps1</CommandLine>
+                    <Description>Disable Automatic Updates</Description>
                     <Order>97</Order>
-                    <Description>Install Windows Update Hotfix (KB3102810)</Description>
+                    <RequiresUserInput>true</RequiresUserInput>
                 </SynchronousCommand>
                 <SynchronousCommand wcm:action="add">
-                    <CommandLine>cmd.exe /c a:\microsoft-updates.bat</CommandLine>
-                    <Order>98</Order>
-                    <Description>Enable Microsoft Updates</Description>
-                </SynchronousCommand>
-                <SynchronousCommand wcm:action="add">
-                    <CommandLine>cmd.exe /c C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -File a:\win-updates.ps1 -MaxUpdatesPerCycle 100 -RestartRequired 1</CommandLine>
+                    <CommandLine>cmd.exe /c C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -File a:\win-updates.ps1 -MaxUpdatesPerCycle 30</CommandLine>
                     <Description>Install Windows Updates</Description>
                     <Order>100</Order>
                     <RequiresUserInput>true</RequiresUserInput>
@@ -278,7 +273,7 @@
             </OEMInformation>
             <!-- Rename computer here. -->
             <ComputerName>vagrant-7</ComputerName>
-            <TimeZone>Pacific Standard Time</TimeZone>
+            <TimeZone>W. Europe Standard Time</TimeZone>
             <RegisteredOwner/>
         </component>
         <component xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="Microsoft-Windows-Security-SPP-UX" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS">

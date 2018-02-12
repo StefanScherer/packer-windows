@@ -9,4 +9,12 @@
 /output-virtualbox-ovf/
 /*.box
 /packer_cache/
-
+*.log
+*~
+*.swp
+/output/
+*.webm
+tmp
+/issues/
+*.iso
+path-to.vmx

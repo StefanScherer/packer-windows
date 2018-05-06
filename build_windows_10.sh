@@ -1,5 +1,5 @@
 #!/bin/bash
-#packer build --only=vmware-iso windows_10.json
+packer build --only=vmware-iso windows_10.json
 #packer build --only=vmware-iso windows_10.json
 
 # Windows 10 Pro own license
@@ -20,11 +20,11 @@
 #  --var autounattend=./tmp/10_pro_msdn/Autounattend.xml \
 #  windows_10.json
 
-packer build \
-  --only=vmware-iso \
-  --var vhv_enable=true \
-  --var iso_url=~/packer_cache/connect/17046.1000.171118-1403.rs_prerelease_CLIENT_BUSINESS_VOL_x64FRE_en-us.iso \
-  --var iso_checksum=0c014fda2648f3659682e51ef3609f7b127be09db51c59ad632a6c407afba4b6 \
-  windows_10_insider.json
+#packer build \
+#  --only=vmware-iso \
+#  --var vhv_enable=true \
+#  --var iso_url=~/packer_cache/connect/17046.1000.171118-1403.rs_prerelease_CLIENT_BUSINESS_VOL_x64FRE_en-us.iso \
+#  --var iso_checksum=0c014fda2648f3659682e51ef3609f7b127be09db51c59ad632a6c407afba4b6 \
+#  windows_10_insider.json
 #  --var disk_type_id=3 \
 #  --var disk_size=30720 \

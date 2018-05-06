@@ -18,6 +18,7 @@ if ($psArchitecture -eq "64-bit") {
 }
 
 # Download VC++ Redistribute Package
+[System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]::Tls12;  # use TLS 1.2
 Write-Host "Downloading VC++ Redistribute from $url ..."
 wget -outfile $vcredist_file $url
 

@@ -11,6 +11,7 @@ $file = Join-Path $tosdatabridgeTempDir "tosdatabridge-master.zip"
 
 # Download TOSDataBridge install package
 Set-ExecutionPolicy Bypass -scope Process
+[System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]::Tls12;  # use TLS 1.2
 Write-Host "Downloading TOSDataBridge from $url ..."
 wget -outfile $file $url
 

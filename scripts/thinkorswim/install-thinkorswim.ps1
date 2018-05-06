@@ -11,6 +11,7 @@ $file = Join-Path $thinkorswimTempDir "thinkorswim.exe"
 
 # Download thinkorswim install package
 Set-ExecutionPolicy Bypass -scope Process
+# [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]::Tls12;  # use TLS 1.2
 Write-Host "Downloading ThinkOrSwim from $url ..."
 wget -outfile $file $url
 

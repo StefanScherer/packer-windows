@@ -35,6 +35,7 @@ The following Windows versions are known to work (built with VMware Fusion Pro
 * Windows Server Core
   * Windows Server 2016 without and with Docker -> Vagrant Cloud box [StefanScherer/windows_2016_docker](https://app.vagrantup.com/StefanScherer/boxes/windows_2016_docker)
   * Windows Server 1709 without and with Docker
+  * Windows Server 1803 without and with Docker
   * Windows Server InsiderPreview Semi-Annual without and with Docker
   * Windows Server 2019 Core(Insider Preview)
 

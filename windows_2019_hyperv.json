@@ -21,7 +21,7 @@
       "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c \"Packer Shutdown\"",
       "switch_name": "{{user `hyperv_switchname`}}",
       "type": "hyperv-iso",
-      "vm_name": "HyperVServer2016",
+      "vm_name": "HyperVServer2019",
       "winrm_password": "vagrant",
       "winrm_timeout": "{{user `winrm_timeout`}}",
       "winrm_username": "vagrant"
@@ -100,9 +100,9 @@
   "post-processors": [
     {
       "keep_input_artifact": false,
-      "output": "windows_2016_hyperv_{{.Provider}}.box",
+      "output": "windows_2019_hyperv_{{.Provider}}.box",
       "type": "vagrant",
-      "vagrantfile_template": "vagrantfile-windows_2016.template"
+      "vagrantfile_template": "vagrantfile-windows_2019.template"
     }
   ],
   "provisioners": [
@@ -131,13 +131,13 @@
     }
   ],
   "variables": {
-    "autounattend": "./answer_files/2016_hyperv/Autounattend.xml",
+    "autounattend": "./answer_files/2019_hyperv/Autounattend.xml",
     "disk_size": "61440",
     "disk_type_id": "1",
     "headless": "false",
-    "iso_checksum": "53e2f01dc4077192a85f60f8d2ffb02189074e19b25f990cbe9eb767328d3fb6",
+    "iso_checksum": "b85dfe289e6219e362c44c29c44bf281e09742f096f794002062cad351b7b337",
     "iso_checksum_type": "sha256",
-    "iso_url": "http://care.dlservice.microsoft.com/dl/download/8/8/6/886DAAEF-81A7-4418-82D5-07D33B816962/14393.0.161119-1705.RS1_REFRESH_SERVERHYPERCORE_OEM_X64FRE_EN-US.ISO",
+    "iso_url": "https://software-download.microsoft.com/pr/Windows_InsiderPreview_ServerHypercore_17692.iso",
     "winrm_timeout": "6h"
   }
 }

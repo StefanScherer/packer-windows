@@ -15,6 +15,7 @@
 		"./scripts/thinkorswim/install-thinkorswim.ps1",
 		"./scripts/tosdatabridge/choco-tosdatabridgepacks.bat",
 		"./scripts/tosdatabridge/install-tosdatabridge.ps1",
+		"./scripts/tosdatabridge/command2run.cmd",
         "./scripts/microsoft-updates.bat",
         "./scripts/win-updates.ps1"
       ],
@@ -44,7 +45,8 @@
 		"./scripts/chocolatey.bat",
 		"./scripts/thinkorswim/install-thinkorswim.ps1",
 		"./scripts/tosdatabridge/choco-tosdatabridgepacks.bat",
-		"./scripts/tosdatabridge/install-tosdatabridge.ps1",		
+		"./scripts/tosdatabridge/install-tosdatabridge.ps1",
+        "./scripts/tosdatabridge/command2run.cmd",		
         "./scripts/microsoft-updates.bat",
         "./scripts/win-updates.ps1"
       ],
@@ -81,7 +83,8 @@
 		"./scripts/chocolatey.bat",
 		"./scripts/thinkorswim/install-thinkorswim.ps1",
 		"./scripts/tosdatabridge/choco-tosdatabridgepacks.bat",
-		"./scripts/tosdatabridge/install-tosdatabridge.ps1",		
+		"./scripts/tosdatabridge/install-tosdatabridge.ps1",
+        "./scripts/tosdatabridge/command2run.cmd",		
         "./scripts/microsoft-updates.bat",
         "./scripts/win-updates.ps1"
       ],
@@ -142,6 +145,11 @@
 		"./scripts/tosdatabridge/install-tosdatabridge.ps1"
       ],
       "type": "powershell"
+    },
+	{
+      "type": "file",
+      "source": "./scripts/tosdatabridge/command2run.cmd",
+      "destination": "C:/"
     },
     {
       "scripts": [

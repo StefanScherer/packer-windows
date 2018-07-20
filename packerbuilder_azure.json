@@ -1,0 +1,61 @@
+{
+  "builders": [
+    {
+      "capture_container_name": "images",
+      "capture_name_prefix": "PackerBuilder",
+      "client_id": "{{user `app_id`}}",
+      "client_secret": "{{user `client_secret`}}",
+      "cloud_environment_name": "Public",
+      "communicator": "winrm",
+      "image_offer": "WindowsServer",
+      "image_publisher": "MicrosoftWindowsServer",
+      "image_sku": "2016-Datacenter",
+      "image_version": "latest",
+      "location": "West Europe",
+      "object_id": "{{user `object_id`}}",
+      "os_type": "Windows",
+      "resource_group_name": "{{user `resource_group`}}",
+      "storage_account": "{{user `storage_account`}}",
+      "subscription_id": "{{user `azure_subscription_id`}}",
+      "tenant_id": "{{user `azure_ad_tenant_id`}}",
+      "type": "azure-arm",
+      "vm_size": "Standard_E4s_v3",
+      "winrm_insecure": "true",
+      "winrm_timeout": "3m",
+      "winrm_use_ssl": "true",
+      "winrm_username": "packer"
+    }
+  ],
+  "post-processors": [],
+  "provisioners": [
+    {
+      "scripts": ["./scripts/packerbuilder/install-hyperv.ps1"],
+      "type": "powershell"
+    },
+    {
+      "type": "windows-restart"
+    },
+    {
+      "scripts": ["./scripts/packerbuilder/add-nat.ps1"],
+      "type": "powershell"
+    },
+    {
+      "type": "powershell",
+      "inline": [
+        "if( Test-Path $Env:SystemRoot\\windows\\system32\\Sysprep\\unattend.xml ){ rm $Env:SystemRoot\\windows\\system32\\Sysprep\\unattend.xml -Force}",
+        "& $env:SystemRoot\\System32\\Sysprep\\Sysprep.exe /oobe /generalize /quiet /quit",
+        "while($true) { $imageState = Get-ItemProperty HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Setup\\State | Select ImageState; if($imageState.ImageState -ne 'IMAGE_STATE_GENERALIZE_RESEAL_TO_OOBE') { Write-Output $imageState.ImageState; Start-Sleep -s 10  } else { break } }"
+      ]
+    }
+  ],
+  "variables": {
+    "app_id": "{{env `PACKER_AZURE_APP_ID`}}",
+    "azure_ad_tenant_id": "{{env `PACKER_AZURE_AD_TENANT_ID`}}",
+    "azure_subscription_id": "{{env `PACKER_AZURE_SUBSCRIPTION_ID`}}",
+    "client_secret": "{{env `PACKER_AZURE_CLIENT_SECRET`}}",
+    "headless": "false",
+    "object_id": "{{env `PACKER_AZURE_OBJECT_ID`}}",
+    "resource_group": "{{env `PACKER_AZURE_RESOURCE_GROUP`}}",
+    "storage_account": "{{env `PACKER_AZURE_STORAGE_ACCOUNT`}}"
+  }
+}

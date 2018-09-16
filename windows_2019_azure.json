@@ -86,7 +86,7 @@
     },
     {
       "scripts": [
-        "./scripts/docker/chocolatey-and-tools.ps1"
+        "./scripts/docker/chocolatey-and-tools.ps1",
         "./scripts/prepare-for-upload-vhd-image.ps1"
       ],
       "type": "powershell"

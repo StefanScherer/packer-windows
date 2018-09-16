@@ -21,9 +21,24 @@ function DockerPull {
   $results
 }
 
+function DockerRun {
+  Param ([string]$image)
+
+  if ($image -eq "") {
+    return
+  }
+
+  Write-Host Run first container from $image ...
+  docker run --rm $args[0] cmd
+}
+
 $images | foreach {
   DockerPull $_
 }
 $images | foreach {
   DockerPull $_
+}
+
+$images | foreach {
+  DockerRun $_
 }

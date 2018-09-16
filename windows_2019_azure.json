@@ -12,7 +12,8 @@
         "{{user `autounattend`}}",
         "./scripts/disable-screensaver.ps1",
         "./scripts/disable-winrm.ps1",
-        "./scripts/enable-winrm.ps1",
+        "./scripts/docker/enable-winrm.ps1",
+        "./scripts/docker/2016/install-containers-feature.ps1",
         "./scripts/microsoft-updates.bat",
         "./scripts/sysprep.bat",
         "./scripts/win-updates.ps1"
@@ -29,7 +30,7 @@
       "switch_name": "{{user `hyperv_switchname`}}",
       "type": "hyperv-iso",
       "use_fixed_vhd_format": true,
-      "vm_name": "WindowsServer2019",
+      "vm_name": "WindowsServer2019Docker",
       "winrm_password": "vagrant",
       "winrm_timeout": "{{user `winrm_timeout`}}",
       "winrm_username": "vagrant"
@@ -40,20 +41,37 @@
     {
       "execute_command": "{{ .Vars }} cmd /c \"{{ .Path }}\"",
       "scripts": [
-        "./scripts/vm-guest-tools.bat",
         "./scripts/enable-rdp.bat"
       ],
       "type": "windows-shell"
     },
     {
       "scripts": [
-        "./scripts/debloat-windows.ps1"
+        "./scripts/debloat-windows.ps1",
+        "./scripts/docker/set-winrm-automatic.ps1"
       ],
       "type": "powershell"
     },
     {
       "restart_timeout": "{{user `restart_timeout`}}",
       "type": "windows-restart"
+    },
+    {
+      "environment_vars": [
+        "docker_images={{user `docker_images`}}",
+        "docker_provider={{user `docker_provider`}}",
+        "docker_version={{user `docker_version`}}"
+      ],
+      "scripts": [
+        "./scripts/docker/add-docker-group.ps1",
+        "./scripts/docker/install-docker.ps1",
+        "./scripts/docker/docker-pull.ps1",
+        "./scripts/wait-for-tiworker.ps1",
+        "./scripts/docker/open-docker-swarm-ports.ps1",
+        "./scripts/docker/remove-docker-key-json.ps1",
+        "./scripts/docker/disable-windows-defender.ps1"
+      ],
+      "type": "powershell"
     },
     {
       "execute_command": "{{ .Vars }} cmd /c \"{{ .Path }}\"",
@@ -68,6 +86,7 @@
     },
     {
       "scripts": [
+        "./scripts/docker/chocolatey-and-tools.ps1"
         "./scripts/prepare-for-upload-vhd-image.ps1"
       ],
       "type": "powershell"
@@ -77,6 +96,9 @@
     "autounattend": "./answer_files/2019/Autounattend.xml",
     "disk_size": "40960",
     "disk_type_id": "1",
+    "docker_images": "mcr.microsoft.com/nanoserver-insider:10.0.17744.1001 mcr.microsoft.com/windowsservercore-insider:10.0.17744.1001 mcr.microsoft.com/windows-insider:10.0.17744.1001",
+    "docker_provider": "ee",
+    "docker_version": "18-03-1-ee-3",
     "headless": "false",
     "hyperv_switchname": "{{env `hyperv_switchname`}}",
     "iso_checksum": "4dae6fed7bbb9a30a4e1453020bbaa39e88f37a2962bdf7bb81705cd9318f695",

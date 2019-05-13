@@ -8,6 +8,7 @@ $env:PACKER_AZURE_APP_ID="dummy"
 $env:PACKER_AZURE_CLIENT_SECRET="dummy"
 $env:PACKER_AZURE_RESOURCE_GROUP="dummy"
 $env:PACKER_AZURE_STORAGE_ACCOUNT="dummy"
+$env:AWS_S3_BUCKET="dummy"
 
 $files = @(Get-ChildItem *.json)
 

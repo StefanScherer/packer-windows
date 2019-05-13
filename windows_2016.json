@@ -3,7 +3,7 @@
     {
       "boot_wait": "0s",
       "communicator": "winrm",
-      "cpu": 2,
+      "cpus": 2,
       "disk_size": "{{user `disk_size`}}",
       "enable_secure_boot": true,
       "enable_virtualization_extensions": true,
@@ -21,7 +21,7 @@
       "iso_checksum": "{{user `iso_checksum`}}",
       "iso_checksum_type": "{{user `iso_checksum_type`}}",
       "iso_url": "{{user `iso_url`}}",
-      "ram_size": 2048,
+      "memory": 2048,
       "shutdown_command": "a:/sysprep.bat",
       "switch_name": "{{user `hyperv_switchname`}}",
       "type": "hyperv-iso",
@@ -33,6 +33,8 @@
     {
       "boot_wait": "2m",
       "communicator": "winrm",
+      "cpus": 2,
+      "disk_adapter_type": "lsisas1068",
       "disk_size": "{{user `disk_size`}}",
       "disk_type_id": "{{user `disk_type_id`}}",
       "floppy_files": [
@@ -50,16 +52,14 @@
       "iso_checksum": "{{user `iso_checksum`}}",
       "iso_checksum_type": "{{user `iso_checksum_type`}}",
       "iso_url": "{{user `iso_url`}}",
+      "memory": 2048,
       "shutdown_command": "a:/sysprep.bat",
       "type": "vmware-iso",
-      "version": 12,
+      "version": 14,
       "vm_name": "WindowsServer2016",
       "vmx_data": {
         "RemoteDisplay.vnc.enabled": "false",
-        "RemoteDisplay.vnc.port": "5900",
-        "memsize": "2048",
-        "numvcpus": "2",
-        "scsi0.virtualDev": "lsisas1068"
+        "RemoteDisplay.vnc.port": "5900"
       },
       "vmx_remove_ethernet_interfaces": true,
       "vnc_port_max": 5980,
@@ -71,6 +71,7 @@
     {
       "boot_wait": "2m",
       "communicator": "winrm",
+      "cpus": 2,
       "disk_size": "{{user `disk_size`}}",
       "floppy_files": [
         "{{user `autounattend`}}",
@@ -88,22 +89,9 @@
       "iso_checksum": "{{user `iso_checksum`}}",
       "iso_checksum_type": "{{user `iso_checksum_type`}}",
       "iso_url": "{{user `iso_url`}}",
+      "memory": 2048,
       "shutdown_command": "a:/sysprep.bat",
       "type": "virtualbox-iso",
-      "vboxmanage": [
-        [
-          "modifyvm",
-          "{{.Name}}",
-          "--memory",
-          "2048"
-        ],
-        [
-          "modifyvm",
-          "{{.Name}}",
-          "--cpus",
-          "2"
-        ]
-      ],
       "vm_name": "WindowsServer2016",
       "winrm_password": "vagrant",
       "winrm_timeout": "{{user `winrm_timeout`}}",
@@ -158,9 +146,9 @@
     "hyperv_switchname": "{{env `hyperv_switchname`}}",
     "iso_checksum": "70721288BBCDFE3239D8F8C0FAE55F1F",
     "iso_checksum_type": "md5",
-    "iso_url": "http://care.dlservice.microsoft.com/dl/download/1/4/9/149D5452-9B29-4274-B6B3-5361DBDA30BC/14393.0.161119-1705.RS1_REFRESH_SERVER_EVAL_X64FRE_EN-US.ISO",
+    "iso_url": "https://software-download.microsoft.com/download/pr/Windows_Server_2016_Datacenter_EVAL_en-us_14393_refresh.ISO",
     "restart_timeout": "5m",
-    "winrm_timeout": "2h"
+    "winrm_timeout": "4h"
   }
 }
 

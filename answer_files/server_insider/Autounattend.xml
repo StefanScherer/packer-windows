@@ -51,7 +51,7 @@
                     <InstallFrom>
                         <MetaData wcm:action="add">
                             <Key>/IMAGE/NAME</Key>
-                            <Value>Windows Server 2016 SERVERDATACENTERACORE</Value>
+                            <Value>Windows Server 2019 SERVERDATACENTERACORE</Value>
                         </MetaData>
                     </InstallFrom>
                     <InstallTo>

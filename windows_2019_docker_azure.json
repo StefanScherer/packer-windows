@@ -1,0 +1,112 @@
+{
+  "builders": [
+    {
+      "boot_wait": "0s",
+      "communicator": "winrm",
+      "cpus": 2,
+      "differencing_disk": false,
+      "disk_size": "{{user `disk_size`}}",
+      "enable_secure_boot": true,
+      "enable_virtualization_extensions": true,
+      "floppy_files": [
+        "{{user `autounattend`}}",
+        "./scripts/disable-screensaver.ps1",
+        "./scripts/disable-winrm.ps1",
+        "./scripts/docker/enable-winrm.ps1",
+        "./scripts/docker/2016/install-containers-feature.ps1",
+        "./scripts/microsoft-updates.bat",
+        "./scripts/sysprep.bat",
+        "./scripts/win-updates.ps1"
+      ],
+      "generation": 1,
+      "guest_additions_mode": "disable",
+      "iso_checksum": "{{user `iso_checksum`}}",
+      "iso_checksum_type": "{{user `iso_checksum_type`}}",
+      "iso_url": "{{user `iso_url`}}",
+      "memory": 2048,
+      "shutdown_command": "a:/sysprep.bat",
+      "skip_compaction": true,
+      "skip_export": true,
+      "switch_name": "{{user `hyperv_switchname`}}",
+      "type": "hyperv-iso",
+      "use_fixed_vhd_format": true,
+      "vm_name": "WindowsServer2019Docker",
+      "winrm_password": "vagrant",
+      "winrm_timeout": "{{user `winrm_timeout`}}",
+      "winrm_username": "vagrant"
+    }
+  ],
+  "post-processors": [],
+  "provisioners": [
+    {
+      "execute_command": "{{ .Vars }} cmd /c \"{{ .Path }}\"",
+      "scripts": [
+        "./scripts/enable-rdp.bat"
+      ],
+      "type": "windows-shell"
+    },
+    {
+      "scripts": [
+        "./scripts/debloat-windows.ps1",
+        "./scripts/docker/set-winrm-automatic.ps1"
+      ],
+      "type": "powershell"
+    },
+    {
+      "restart_timeout": "{{user `restart_timeout`}}",
+      "type": "windows-restart"
+    },
+    {
+      "environment_vars": [
+        "docker_images={{user `docker_images`}}",
+        "docker_provider={{user `docker_provider`}}",
+        "docker_version={{user `docker_version`}}"
+      ],
+      "scripts": [
+        "./scripts/docker/add-docker-group.ps1",
+        "./scripts/docker/install-docker.ps1",
+        "./scripts/docker/docker-pull.ps1",
+        "./scripts/wait-for-tiworker.ps1",
+        "./scripts/docker/open-docker-swarm-ports.ps1",
+        "./scripts/docker/remove-docker-key-json.ps1",
+        "./scripts/docker/disable-windows-defender.ps1"
+      ],
+      "type": "powershell"
+    },
+    {
+      "execute_command": "{{ .Vars }} cmd /c \"{{ .Path }}\"",
+      "scripts": [
+        "./scripts/pin-powershell.bat",
+        "./scripts/set-winrm-automatic.bat",
+        "./scripts/uac-enable.bat",
+        "./scripts/compile-dotnet-assemblies.bat",
+        "./scripts/dis-updates.bat"
+      ],
+      "type": "windows-shell"
+    },
+    {
+      "scripts": [
+        "./scripts/docker/chocolatey-and-tools.ps1",
+        "./scripts/prepare-for-upload-vhd-image.ps1"
+      ],
+      "type": "powershell"
+    }
+  ],
+  "variables": {
+    "autounattend": "./answer_files/2019/Autounattend.xml",
+    "disk_size": "51200",
+    "disk_type_id": "1",
+    "docker_images": "mcr.microsoft.com/windows/nanoserver:1809 mcr.microsoft.com/windows/servercore:ltsc2019",
+    "docker_provider": "ee",
+    "docker_version": "18-09-5",
+    "headless": "false",
+    "hyperv_switchname": "{{env `hyperv_switchname`}}",
+    "iso_checksum": "221F9ACBC727297A56674A0F1722B8AC7B6E840B4E1FFBDD538A9ED0DA823562",
+    "iso_checksum_type": "sha256",
+    "iso_url": "https://software-download.microsoft.com/download/sg/17763.379.190312-0539.rs5_release_svc_refresh_SERVER_EVAL_x64FRE_en-us.iso",
+    "manually_download_iso_from": "https://www.microsoft.com/en-us/evalcenter/evaluate-windows-server-2019",
+    "restart_timeout": "5m",
+    "winrm_timeout": "2h"
+  }
+}
+

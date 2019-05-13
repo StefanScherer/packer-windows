@@ -2,6 +2,8 @@
   "builders": [
     {
       "boot_wait": "2m",
+      "cpus": 2,
+      "disk_adapter_type": "lsisas1068",
       "disk_size": 61440,
       "floppy_files": [
         "./answer_files/81/Autounattend.xml",
@@ -13,7 +15,8 @@
       "headless": true,
       "iso_checksum": "5e4ecb86fd8619641f1d58f96e8561ec",
       "iso_checksum_type": "md5",
-      "iso_url": "http://download.microsoft.com/download/B/9/9/B999286E-0A47-406D-8B3D-5B5AD7373A4A/9600.16384.WINBLUE_RTM.130821-1623_X64FRE_ENTERPRISE_EVAL_EN-US-IRM_CENA_X64FREE_EN-US_DV5.ISO",
+      "iso_url": "https://download.microsoft.com/download/B/9/9/B999286E-0A47-406D-8B3D-5B5AD7373A4A/9600.16384.WINBLUE_RTM.130821-1623_X64FRE_ENTERPRISE_EVAL_EN-US-IRM_CENA_X64FREE_EN-US_DV5.ISO",
+      "memory": 2048,
       "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c \"Packer Shutdown\"",
       "ssh_password": "vagrant",
       "ssh_username": "vagrant",
@@ -22,10 +25,7 @@
       "type": "vmware-iso",
       "vmx_data": {
         "RemoteDisplay.vnc.enabled": "false",
-        "RemoteDisplay.vnc.port": "5900",
-        "memsize": "2048",
-        "numvcpus": "2",
-        "scsi0.virtualDev": "lsisas1068"
+        "RemoteDisplay.vnc.port": "5900"
       },
       "vmx_remove_ethernet_interfaces": true,
       "vnc_port_max": 5980,
@@ -33,6 +33,7 @@
     },
     {
       "boot_wait": "2m",
+      "cpus": 2,
       "disk_size": 61440,
       "floppy_files": [
         "./answer_files/81/Autounattend.xml",
@@ -44,25 +45,14 @@
       "headless": false,
       "iso_checksum": "5e4ecb86fd8619641f1d58f96e8561ec",
       "iso_checksum_type": "md5",
-      "iso_url": "http://download.microsoft.com/download/B/9/9/B999286E-0A47-406D-8B3D-5B5AD7373A4A/9600.16384.WINBLUE_RTM.130821-1623_X64FRE_ENTERPRISE_EVAL_EN-US-IRM_CENA_X64FREE_EN-US_DV5.ISO",
+      "iso_url": "https://download.microsoft.com/download/B/9/9/B999286E-0A47-406D-8B3D-5B5AD7373A4A/9600.16384.WINBLUE_RTM.130821-1623_X64FRE_ENTERPRISE_EVAL_EN-US-IRM_CENA_X64FREE_EN-US_DV5.ISO",
+      "memory": 2048,
       "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c \"Packer Shutdown\"",
       "ssh_password": "vagrant",
       "ssh_username": "vagrant",
       "ssh_wait_timeout": "4h",
       "type": "virtualbox-iso",
       "vboxmanage": [
-        [
-          "modifyvm",
-          "{{.Name}}",
-          "--memory",
-          "2048"
-        ],
-        [
-          "modifyvm",
-          "{{.Name}}",
-          "--cpus",
-          "2"
-        ],
         [
           "modifyvm",
           "{{.Name}}",

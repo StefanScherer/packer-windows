@@ -3,7 +3,7 @@
     {
       "boot_wait": "0s",
       "communicator": "winrm",
-      "cpu": 2,
+      "cpus": 2,
       "disk_size": "{{user `disk_size`}}",
       "enable_secure_boot": true,
       "floppy_files": [
@@ -17,7 +17,7 @@
       "iso_checksum": "{{user `iso_checksum`}}",
       "iso_checksum_type": "{{user `iso_checksum_type`}}",
       "iso_url": "{{user `iso_url`}}",
-      "ram_size": 2048,
+      "memory": 2048,
       "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c \"Packer Shutdown\"",
       "switch_name": "{{user `hyperv_switchname`}}",
       "type": "hyperv-iso",
@@ -29,6 +29,8 @@
     {
       "boot_wait": "2m",
       "communicator": "winrm",
+      "cpus": 2,
+      "disk_adapter_type": "lsisas1068",
       "disk_size": "{{user `disk_size`}}",
       "disk_type_id": "{{user `disk_type_id`}}",
       "floppy_files": [
@@ -43,14 +45,12 @@
       "iso_checksum": "{{user `iso_checksum`}}",
       "iso_checksum_type": "{{user `iso_checksum_type`}}",
       "iso_url": "{{user `iso_url`}}",
+      "memory": 2048,
       "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c \"Packer Shutdown\"",
       "type": "vmware-iso",
       "vmx_data": {
         "RemoteDisplay.vnc.enabled": "false",
-        "RemoteDisplay.vnc.port": "5900",
-        "memsize": "2048",
-        "numvcpus": "2",
-        "scsi0.virtualDev": "lsisas1068"
+        "RemoteDisplay.vnc.port": "5900"
       },
       "vmx_remove_ethernet_interfaces": true,
       "vnc_port_max": 5980,
@@ -62,6 +62,7 @@
     {
       "boot_wait": "2m",
       "communicator": "winrm",
+      "cpus": 2,
       "disk_size": "{{user `disk_size`}}",
       "floppy_files": [
         "{{user `autounattend`}}",
@@ -71,27 +72,14 @@
         "./scripts/win-updates.ps1"
       ],
       "guest_additions_mode": "disable",
-      "guest_os_type": "Windows2012_64",
+      "guest_os_type": "Windows2016_64",
       "headless": "{{user `headless`}}",
       "iso_checksum": "{{user `iso_checksum`}}",
       "iso_checksum_type": "{{user `iso_checksum_type`}}",
       "iso_url": "{{user `iso_url`}}",
+      "memory": 2048,
       "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c \"Packer Shutdown\"",
       "type": "virtualbox-iso",
-      "vboxmanage": [
-        [
-          "modifyvm",
-          "{{.Name}}",
-          "--memory",
-          "2048"
-        ],
-        [
-          "modifyvm",
-          "{{.Name}}",
-          "--cpus",
-          "2"
-        ]
-      ],
       "winrm_password": "vagrant",
       "winrm_timeout": "{{user `winrm_timeout`}}",
       "winrm_username": "vagrant"
@@ -137,7 +125,7 @@
     "headless": "false",
     "iso_checksum": "53e2f01dc4077192a85f60f8d2ffb02189074e19b25f990cbe9eb767328d3fb6",
     "iso_checksum_type": "sha256",
-    "iso_url": "http://care.dlservice.microsoft.com/dl/download/8/8/6/886DAAEF-81A7-4418-82D5-07D33B816962/14393.0.161119-1705.RS1_REFRESH_SERVERHYPERCORE_OEM_X64FRE_EN-US.ISO",
+    "iso_url": "https://download.microsoft.com/download/8/8/6/886DAAEF-81A7-4418-82D5-07D33B816962/14393.0.161119-1705.RS1_REFRESH_SERVERHYPERCORE_OEM_X64FRE_EN-US.ISO",
     "winrm_timeout": "6h"
   }
 }

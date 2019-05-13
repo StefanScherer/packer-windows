@@ -10,7 +10,7 @@ function LogWrite {
    Param ([string]$logstring)
    $now = Get-Date -format s
    Add-Content $Logfile -value "$now $logstring"
-   Write-Host $logstring
+   Write-Output $logstring
 }
 
 function Check-ContinueRestartOrEnd() {
@@ -31,10 +31,10 @@ function Check-ContinueRestartOrEnd() {
                 Install-WindowsUpdates
             } elseif ($script:Cycles -gt $global:MaxCycles) {
                 LogWrite "Exceeded Cycle Count - Stopping"
-                Invoke-Expression "a:\enable-winrm.ps1"
+                & "a:\enable-winrm.ps1"
             } else {
                 LogWrite "Done Installing Windows Updates"
-                Invoke-Expression "a:\enable-winrm.ps1"
+                & "a:\enable-winrm.ps1"
             }
         }
         1 {
@@ -64,7 +64,7 @@ function Install-WindowsUpdates() {
     $CurrentUpdates = $SearchResult.Updates
     while($script:i -lt $CurrentUpdates.Count -and $script:CycleUpdateCount -lt $MaxUpdatesPerCycle) {
         $Update = $CurrentUpdates.Item($script:i)
-        if (($Update -ne $null) -and (!$Update.IsDownloaded)) {
+        if ($null -ne $Update) {
             [bool]$addThisUpdate = $false
             if ($Update.InstallationBehavior.CanRequestUserInput) {
                 LogWrite "> Skipping: $($Update.Title) because it requires user input"
@@ -126,7 +126,7 @@ function Install-WindowsUpdates() {
         LogWrite 'No updates available to install...'
         $global:MoreUpdates=0
         $global:RestartRequired=0
-        Invoke-Expression "a:\enable-winrm.ps1"
+        & "a:\enable-winrm.ps1"
         break
     }
 
@@ -165,13 +165,7 @@ function Install-WindowsUpdates() {
 function Check-WindowsUpdates() {
     LogWrite "Checking For Windows Updates"
     $Username = $env:USERDOMAIN + "\" + $env:USERNAME
-
-    New-EventLog -Source $ScriptName -LogName 'Windows Powershell' -ErrorAction SilentlyContinue
-
-    $Message = "Script: " + $ScriptPath + "`nScript User: " + $Username + "`nStarted: " + (Get-Date).toString()
-
-    Write-EventLog -LogName 'Windows Powershell' -Source $ScriptName -EventID "104" -EntryType "Information" -Message $Message
-    LogWrite $Message
+    LogWrite "Script: " + $ScriptPath + "`nScript User: " + $Username + "`nStarted: " + (Get-Date).toString()
 
     $script:UpdateSearcher = $script:UpdateSession.CreateUpdateSearcher()
     $script:successful = $FALSE

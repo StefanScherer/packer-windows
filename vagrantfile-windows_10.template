@@ -64,6 +64,6 @@ Vagrant.configure("2") do |config|
     config.vm.provider "hyperv" do |v|
         v.cpus = 2
         v.maxmemory = 2048
-        v.differencing_disk = true
+        v.linked_clone = true
     end
 end

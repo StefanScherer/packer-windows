@@ -50,8 +50,8 @@
                 <OSImage>
                     <InstallFrom>
                         <MetaData wcm:action="add">
-                            <Key>/IMAGE/NAME </Key>
-                            <Value>Hyper-V Server 2012 R2 SERVERHYPERCORE</Value>
+                            <Key>/IMAGE/NAME</Key>
+                            <Value>Windows Server 2012 R2 SERVERHYPERCORE</Value>
                         </MetaData>
                     </InstallFrom>
                     <InstallTo>

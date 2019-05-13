@@ -58,7 +58,7 @@
     "azure_ad_tenant_id": "{{env `PACKER_AZURE_AD_TENANT_ID`}}",
     "azure_subscription_id": "{{env `PACKER_AZURE_SUBSCRIPTION_ID`}}",
     "client_secret": "{{env `PACKER_AZURE_CLIENT_SECRET`}}",
-    "docker_images": "microsoft/windowsservercore microsoft/nanoserver",
+    "docker_images": "mcr.microsoft.com/windows/servercore:ltsc2016",
     "docker_provider": "DockerProvider",
     "docker_version": "stable",
     "headless": "false",

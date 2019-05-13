@@ -2,6 +2,7 @@ if ($env:PACKER_BUILDER_TYPE -And $($env:PACKER_BUILDER_TYPE).startsWith("hyperv
   Write-Host Skip debloat steps in Hyper-V build.
 } else {
   Write-Host Downloading debloat zip
+  [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
   $url="https://github.com/StefanScherer/Debloat-Windows-10/archive/master.zip"
   (New-Object System.Net.WebClient).DownloadFile($url, "$env:TEMP\debloat.zip")
   Expand-Archive -Path $env:TEMP\debloat.zip -DestinationPath $env:TEMP -Force

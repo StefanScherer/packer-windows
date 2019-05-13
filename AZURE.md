@@ -78,17 +78,18 @@ azure vm image list -l westeurope MicrosoftWindowsServer
 The interesting ones might be
 
 ```
-data:    MicrosoftWindowsServer  WindowsServer      2016-Datacenter                  Windows  2016.0.20161010  westeurope  MicrosoftWindowsServer:WindowsServer:2016-Datacenter:2016.0.20161010
-data:    MicrosoftWindowsServer  WindowsServer      2016-Datacenter                  Windows  2016.0.20161108  westeurope  MicrosoftWindowsServer:WindowsServer:2016-Datacenter:2016.0.20161108
-data:    MicrosoftWindowsServer  WindowsServer      2016-Datacenter                  Windows  2016.0.20161213  westeurope  MicrosoftWindowsServer:WindowsServer:2016-Datacenter:2016.0.20161213
+data:    MicrosoftWindowsServer  WindowsServer      2016-Datacenter                  Windows  2016.0.20161010  westeurope  MicrosoftWindowsServer:WindowsServer:2016-Datacenter:2016.0.20161010                
+data:    MicrosoftWindowsServer  WindowsServer      2016-Datacenter                  Windows  2016.0.20161108  westeurope  MicrosoftWindowsServer:WindowsServer:2016-Datacenter:2016.0.20161108                
+data:    MicrosoftWindowsServer  WindowsServer      2016-Datacenter                  Windows  2016.0.20161213  westeurope  MicrosoftWindowsServer:WindowsServer:2016-Datacenter:2016.0.20161213                
 data:    MicrosoftWindowsServer  WindowsServer      2016-Datacenter-with-Containers  Windows  2016.0.20161012  westeurope  MicrosoftWindowsServer:WindowsServer:2016-Datacenter-with-Containers:2016.0.20161012
 data:    MicrosoftWindowsServer  WindowsServer      2016-Datacenter-with-Containers  Windows  2016.0.20161025  westeurope  MicrosoftWindowsServer:WindowsServer:2016-Datacenter-with-Containers:2016.0.20161025
 data:    MicrosoftWindowsServer  WindowsServer      2016-Datacenter-with-Containers  Windows  2016.0.20161108  westeurope  MicrosoftWindowsServer:WindowsServer:2016-Datacenter-with-Containers:2016.0.20161108
 data:    MicrosoftWindowsServer  WindowsServer      2016-Datacenter-with-Containers  Windows  2016.0.20161213  westeurope  MicrosoftWindowsServer:WindowsServer:2016-Datacenter-with-Containers:2016.0.20161213
-data:    MicrosoftWindowsServer  WindowsServer      2016-Nano-Server                 Windows  2016.0.20161012  westeurope  MicrosoftWindowsServer:WindowsServer:2016-Nano-Server:2016.0.20161012
-data:    MicrosoftWindowsServer  WindowsServer      2016-Nano-Server                 Windows  2016.0.20161109  westeurope  MicrosoftWindowsServer:WindowsServer:2016-Nano-Server:2016.0.20161109
-data:    MicrosoftWindowsServer  WindowsServer      2016-Nano-Server                 Windows  2016.0.20170113  westeurope  MicrosoftWindowsServer:WindowsServer:2016-Nano-Server:2016.0.20170113
+data:    MicrosoftWindowsServer  WindowsServer      2016-Nano-Server                 Windows  2016.0.20161012  westeurope  MicrosoftWindowsServer:WindowsServer:2016-Nano-Server:2016.0.20161012               
+data:    MicrosoftWindowsServer  WindowsServer      2016-Nano-Server                 Windows  2016.0.20161109  westeurope  MicrosoftWindowsServer:WindowsServer:2016-Nano-Server:2016.0.20161109               
+data:    MicrosoftWindowsServer  WindowsServer      2016-Nano-Server                 Windows  2016.0.20170113  westeurope  MicrosoftWindowsServer:WindowsServer:2016-Nano-Server:2016.0.20170113               
 ```
+
 
 **TODO** Describe how to create the resource group and storage account needed by packer build. I've used an existing resource group and storage account.
 
@@ -101,11 +102,7 @@ azure group create myaccount westeurope
 ## Create a storage account
 
 ```
-azure storage account create \
-  --sku-name PLRS
-  --location westeurope
-  --resource-group myaccount \
-  --kind storage myaccount
+azure storage account create --sku-name LRS --location westeurope --kind BlobStorage --access-tier Cool --resource-group myaccount myaccount
 ```
 
 ## Store secrets in pass

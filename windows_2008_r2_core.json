@@ -2,6 +2,8 @@
   "builders": [
     {
       "boot_wait": "2m",
+      "cpus": 2,
+      "disk_adapter_type": "lsisas1068",
       "disk_size": 61440,
       "floppy_files": [
         "./answer_files/2008_r2_core/Autounattend.xml",
@@ -13,6 +15,7 @@
       "iso_checksum": "4263be2cf3c59177c45085c0a7bc6ca5",
       "iso_checksum_type": "md5",
       "iso_url": "http://care.dlservice.microsoft.com/dl/download/7/5/E/75EC4E54-5B02-42D6-8879-D8D3A25FBEF7/7601.17514.101119-1850_x64fre_server_eval_en-us-GRMSXEVAL_EN_DVD.iso",
+      "memory": 2048,
       "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c \"Packer Shutdown\"",
       "ssh_password": "vagrant",
       "ssh_username": "vagrant",
@@ -21,10 +24,7 @@
       "type": "vmware-iso",
       "vmx_data": {
         "RemoteDisplay.vnc.enabled": "false",
-        "RemoteDisplay.vnc.port": "5900",
-        "memsize": "2048",
-        "numvcpus": "2",
-        "scsi0.virtualDev": "lsisas1068"
+        "RemoteDisplay.vnc.port": "5900"
       },
       "vmx_remove_ethernet_interfaces": true,
       "vnc_port_max": 5980,
@@ -32,6 +32,7 @@
     },
     {
       "boot_wait": "2m",
+      "cpus": 2,
       "disk_size": 61440,
       "floppy_files": [
         "./answer_files/2008_r2_core/Autounattend.xml",
@@ -43,25 +44,12 @@
       "iso_checksum": "4263be2cf3c59177c45085c0a7bc6ca5",
       "iso_checksum_type": "md5",
       "iso_url": "http://care.dlservice.microsoft.com/dl/download/7/5/E/75EC4E54-5B02-42D6-8879-D8D3A25FBEF7/7601.17514.101119-1850_x64fre_server_eval_en-us-GRMSXEVAL_EN_DVD.iso",
+      "memory": 2048,
       "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c \"Packer Shutdown\"",
       "ssh_password": "vagrant",
       "ssh_username": "vagrant",
       "ssh_wait_timeout": "2h",
-      "type": "virtualbox-iso",
-      "vboxmanage": [
-        [
-          "modifyvm",
-          "{{.Name}}",
-          "--memory",
-          "2048"
-        ],
-        [
-          "modifyvm",
-          "{{.Name}}",
-          "--cpus",
-          "2"
-        ]
-      ]
+      "type": "virtualbox-iso"
     }
   ],
   "post-processors": [

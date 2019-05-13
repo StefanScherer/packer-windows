@@ -3,10 +3,10 @@
 :: This fixes a problem with wrong exitcode 0 instead of custom exitcode in PowerShell 2.0
 setlocal
 if defined ProgramFiles(x86) (
-  set link=http://hotfixv4.microsoft.com/Windows%%207/Windows%%20Server2008%%20R2%%20SP1/sp2/Fix373932/7600/free/438167_intl_x64_zip.exe
+  set link=https://hotfixv4.microsoft.com/Windows%%207/Windows%%20Server2008%%20R2%%20SP1/sp2/Fix373932/7600/free/438167_intl_x64_zip.exe
   set msufilename=%TEMP%\Windows6.1-KB2552055-x64.msu
 ) else (
-  set link=http://hotfixv4.microsoft.com/Windows%%207/Windows%%20Server2008%%20R2%%20SP1/sp2/Fix373932/7600/free/438164_intl_i386_zip.exe
+  set link=https://hotfixv4.microsoft.com/Windows%%207/Windows%%20Server2008%%20R2%%20SP1/sp2/Fix373932/7600/free/438164_intl_i386_zip.exe
   set msufilename=%TEMP%\Windows6.1-KB2552055-x86.msu
 )
 set zipfilename=%TEMP%\KB2552055.zip

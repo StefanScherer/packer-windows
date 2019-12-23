@@ -2,17 +2,22 @@
   "builders": [
     {
       "boot_wait": "2m",
+      "communicator": "winrm",
+      "winrm_password": "vagrant",
+      "winrm_timeout": "{{user `winrm_timeout`}}",
+      "winrm_username": "vagrant",
       "cpus": 2,
       "disk_adapter_type": "lsisas1068",
       "disk_size": 61440,
       "floppy_files": [
         "./answer_files/81/Autounattend.xml",
+        "./scripts/dis-updates.ps1",
         "./scripts/microsoft-updates.bat",
         "./scripts/win-updates.ps1",
-        "./scripts/openssh.ps1"
+        "./scripts/enable-winrm.ps1"
       ],
       "guest_os_type": "windows8-64",
-      "headless": true,
+      "headless": false,
       "iso_checksum": "5e4ecb86fd8619641f1d58f96e8561ec",
       "iso_checksum_type": "md5",
       "iso_url": "https://download.microsoft.com/download/B/9/9/B999286E-0A47-406D-8B3D-5B5AD7373A4A/9600.16384.WINBLUE_RTM.130821-1623_X64FRE_ENTERPRISE_EVAL_EN-US-IRM_CENA_X64FREE_EN-US_DV5.ISO",
@@ -33,13 +38,18 @@
     },
     {
       "boot_wait": "2m",
+      "communicator": "winrm",
+      "winrm_password": "vagrant",
+      "winrm_timeout": "{{user `winrm_timeout`}}",
+      "winrm_username": "vagrant",
       "cpus": 2,
       "disk_size": 61440,
       "floppy_files": [
         "./answer_files/81/Autounattend.xml",
+        "./scripts/dis-updates.ps1",
         "./scripts/microsoft-updates.bat",
         "./scripts/win-updates.ps1",
-        "./scripts/openssh.ps1"
+        "./scripts/enable-winrm.ps1"
       ],
       "guest_os_type": "Windows81_64",
       "headless": false,
@@ -90,25 +100,21 @@
   ],
   "provisioners": [
     {
-      "execute_command": "{{.Vars}} cmd /c C:/Windows/Temp/script.bat",
+      "execute_command": "{{.Vars}} cmd /c C:/tmp/script.bat",
       "remote_path": "/tmp/script.bat",
       "scripts": [
         "./scripts/vm-guest-tools.bat",
         "./scripts/chef.bat",
-        "./scripts/vagrant-ssh.bat",
         "./scripts/disable-auto-logon.bat",
         "./scripts/enable-rdp.bat",
         "./scripts/compile-dotnet-assemblies.bat",
         "./scripts/compact.bat"
       ],
-      "type": "shell"
-    },
-    {
-      "inline": [
-        "rm -rf /tmp/*"
-      ],
-      "type": "shell"
+      "type": "windows-shell"
     }
-  ]
+  ],
+  "variables": {
+    "winrm_timeout": "6h"
+  }
 }
 

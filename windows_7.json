@@ -13,7 +13,8 @@
         "./answer_files/7/Autounattend.xml",
         "./scripts/dis-updates.ps1",
         "./scripts/microsoft-updates.bat",
-        "./scripts/win-updates.ps1"
+        "./scripts/win-updates.ps1",
+        "./scripts/enable-winrm.ps1"
       ],
       "guest_os_type": "windows7-64",
       "headless": false,
@@ -47,7 +48,8 @@
         "./answer_files/7/Autounattend.xml",
         "./scripts/dis-updates.ps1",
         "./scripts/microsoft-updates.bat",
-        "./scripts/win-updates.ps1"
+        "./scripts/win-updates.ps1",
+	    "./scripts/enable-winrm.ps1"
       ],
       "guest_os_type": "Windows7_64",
       "headless": false,

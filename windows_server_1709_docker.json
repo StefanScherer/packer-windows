@@ -163,7 +163,7 @@
     "disk_type_id": "1",
     "docker_images": "mcr.microsoft.com/windows/servercore:1709 mcr.microsoft.com/windows/nanoserver:1709",
     "docker_provider": "ee",
-    "docker_version": "18-09-6",
+    "docker_version": "19.03.5",
     "headless": "false",
     "iso_checksum": "03b97d09b0c19ac6c424c5b41a9b4781cb7334d7ef1158199a9693f7dcecce9f",
     "iso_checksum_type": "sha256",

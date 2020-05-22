@@ -1,6 +1,8 @@
 :: Ensure C:\Chocolatey\bin is on the path
-set /p PATH=<C:\Windows\Temp\PATH
+set /p PATH=%PATH%;C:\ProgramData\chocolatey\
+echo %PATH%
 
 :: Install all the things; for example:
-cmd /c choco install 7zip
-cmd /c choco install notepadplusplus
+choco install /y 7zip
+choco install /y notepadplusplus
+choco install /y boxstarter.winconfig

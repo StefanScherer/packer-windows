@@ -5,6 +5,40 @@
       "communicator": "winrm",
       "cpus": 2,
       "disk_size": "{{user `disk_size`}}",
+      "floppy_files": [
+        "{{user `autounattend`}}",
+        "./scripts/disable-screensaver.ps1",
+        "./scripts/disable-winrm.ps1",
+        "./scripts/enable-winrm.ps1",
+        "./scripts/microsoft-updates.bat",
+        "./scripts/unattend.xml",
+        "./scripts/sysprep.bat",
+        "./scripts/win-updates.ps1"
+      ],
+      "headless": true,
+      "iso_checksum": "{{user `iso_checksum`}}",
+      "iso_checksum_type": "{{user `iso_checksum_type`}}",
+      "iso_url": "{{user `iso_url`}}",
+      "memory": 2048,
+      "shutdown_command": "a:/sysprep.bat",
+      "type": "qemu",
+      "accelerator": "kvm",
+      "output_directory": "windows_2019-qemu",
+      "qemuargs": [
+        [ "-drive", "file=windows_2019-qemu/{{ .Name }},if=virtio,cache=writeback,discard=ignore,format=qcow2,index=1" ],
+        [ "-drive", "file={{ user `virtio_win_iso` }},media=cdrom,index=3" ]
+      ],
+      "vm_name": "WindowsServer2019",
+      "winrm_password": "vagrant",
+      "winrm_timeout": "{{user `winrm_timeout`}}",
+      "winrm_username": "vagrant"
+    },
+    {
+      "boot_wait": "0s",
+      "communicator": "winrm",
+      "configuration_version": "8.0",
+      "cpus": 2,
+      "disk_size": "{{user `disk_size`}}",
       "enable_secure_boot": true,
       "enable_virtualization_extensions": true,
       "floppy_files": [
@@ -144,12 +178,13 @@
     "disk_type_id": "1",
     "headless": "false",
     "hyperv_switchname": "{{env `hyperv_switchname`}}",
-    "iso_checksum": "221F9ACBC727297A56674A0F1722B8AC7B6E840B4E1FFBDD538A9ED0DA823562",
+    "iso_checksum": "549bca46c055157291be6c22a3aaaed8330e78ef4382c99ee82c896426a1cee1",
     "iso_checksum_type": "sha256",
-    "iso_url": "https://software-download.microsoft.com/download/sg/17763.379.190312-0539.rs5_release_svc_refresh_SERVER_EVAL_x64FRE_en-us.iso",
+    "iso_url": "https://software-download.microsoft.com/download/pr/17763.737.190906-2324.rs5_release_svc_refresh_SERVER_EVAL_x64FRE_en-us_1.iso",
     "manually_download_iso_from": "https://www.microsoft.com/en-us/evalcenter/evaluate-windows-server-2019",
     "restart_timeout": "5m",
-    "winrm_timeout": "2h"
+    "winrm_timeout": "2h",
+    "virtio_win_iso": "~/virtio-win.iso"
   }
 }
 

@@ -98,7 +98,7 @@
       "keep_input_artifact": false,
       "output": "windows_server_insider_docker_{{.Provider}}.box",
       "type": "vagrant",
-      "vagrantfile_template": "vagrantfile-windows_2016_core.template"
+      "vagrantfile_template": "vagrantfile-windows_2019_core.template"
     }
   ],
   "provisioners": [
@@ -143,13 +143,13 @@
     "autounattend": "./answer_files/server_insider/Autounattend.xml",
     "disk_size": "61440",
     "disk_type_id": "1",
-    "docker_images": "mcr.microsoft.com/windows/nanoserver/insider:10.0.18356.1 mcr.microsoft.com/windows/servercore/insider:10.0.18356.1 mcr.microsoft.com/windows/insider:10.0.18356.1",
+    "docker_images": "mcr.microsoft.com/windows/nanoserver/insider:10.0.19035.1 mcr.microsoft.com/windows/servercore/insider:10.0.19035.1 mcr.microsoft.com/windows/insider:10.0.19035.1",
     "docker_provider": "master",
     "docker_version": "",
     "headless": "false",
-    "iso_checksum": "34bc68a9a7a4c7d9eafe54aba1d693ee13a5913a95e523724b2a3bca807b8005",
+    "iso_checksum": "e9d31bd3bc62b8f0d06dadc9fcbe1e76819b5ed494a187bad9ad8f835c79f6fc",
     "iso_checksum_type": "sha256",
-    "iso_url": "https://software-download.microsoft.com/pr/Windows_InsiderPreview_Server_18356.iso",
+    "iso_url": "https://software-download.microsoft.com/pr/Windows_InsiderPreview_Server_en-us_19035.iso",
     "manually_download_iso_from": "https://www.microsoft.com/en-us/software-download/windowsinsiderpreviewserver",
     "restart_timeout": "5m",
     "vhv_enable": "true",

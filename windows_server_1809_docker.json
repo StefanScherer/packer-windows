@@ -104,7 +104,7 @@
       "keep_input_artifact": false,
       "output": "windows_server_1809_docker_{{.Provider}}.box",
       "type": "vagrant",
-      "vagrantfile_template": "vagrantfile-windows_2016_core.template"
+      "vagrantfile_template": "vagrantfile-windows_2019_core.template"
     }
   ],
   "provisioners": [
@@ -163,7 +163,7 @@
     "disk_type_id": "1",
     "docker_images": "mcr.microsoft.com/windows/nanoserver:1809 mcr.microsoft.com/windows/servercore:ltsc2019 mcr.microsoft.com/windows/servercore:1809 mcr.microsoft.com/windows:1809",
     "docker_provider": "ee",
-    "docker_version": "18-09-6",
+    "docker_version": "19.03.5",
     "headless": "false",
     "iso_checksum": "af1edc51f119c39d4eb56bcd9500d1f5ae57c0fbdf6c90ee4ecb535fe82ff0d6",
     "iso_checksum_type": "sha256",

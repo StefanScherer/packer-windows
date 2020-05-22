@@ -50,8 +50,8 @@
                 <OSImage>
                     <InstallFrom>
                         <MetaData wcm:action="add">
-                            <Key>/IMAGE/NAME</Key>
-                            <Value>Windows Server 2019 SERVERDATACENTERACORE</Value>
+                            <Key>/IMAGE/INDEX</Key>
+                            <Value>0</Value>
                         </MetaData>
                     </InstallFrom>
                     <InstallTo>

@@ -1,6 +1,6 @@
 # use docker_provider:  "ee", "ce", "master" or ""
 $docker_provider = "ee"
-$docker_version = "18-09-6"
+$docker_version = "18.09.9"
 if (Test-Path env:docker_provider) {
   $docker_provider = $env:docker_provider  
 }
@@ -12,7 +12,8 @@ $ProgressPreference = 'SilentlyContinue'
 if ($docker_provider -eq "ce") {
   $zip_url = $("https://download.docker.com/win/static/edge/x86_64/docker-{0}-ce.zip" -f $docker_version)
 } elseif ($docker_provider -eq "ee") {
-  $zip_url = $("https://dockermsft.blob.core.windows.net/dockercontainer/docker-{0}.zip" -f $docker_version)
+  $folder = $docker_version -replace "\.\d+$", ""
+  $zip_url = $("https://download.docker.com/components/engine/windows-server/{0}/docker-{1}.zip" -f $folder, $docker_version)
 } elseif ($docker_provider -eq "master") {
   $docker_version = "master"
   $zip_url = "https://master.dockerproject.com/windows/x86_64/docker.zip"

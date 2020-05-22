@@ -3,6 +3,7 @@
     {
       "boot_wait": "0s",
       "communicator": "winrm",
+      "configuration_version": "8.0",
       "cpus": 2,
       "disk_size": "{{user `disk_size`}}",
       "enable_secure_boot": true,
@@ -160,7 +161,7 @@
     "disk_type_id": "1",
     "docker_images": "mcr.microsoft.com/windows/servercore:ltsc2016",
     "docker_provider": "ee",
-    "docker_version": "18-09-6",
+    "docker_version": "19.03.5",
     "headless": "false",
     "iso_checksum": "70721288BBCDFE3239D8F8C0FAE55F1F",
     "iso_checksum_type": "md5",

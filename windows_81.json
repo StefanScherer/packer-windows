@@ -20,7 +20,7 @@
       "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c \"Packer Shutdown\"",
       "ssh_password": "vagrant",
       "ssh_username": "vagrant",
-      "ssh_wait_timeout": "4h",
+      "ssh_timeout": "4h",
       "tools_upload_flavor": "windows",
       "type": "vmware-iso",
       "vmx_data": {
@@ -50,7 +50,7 @@
       "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c \"Packer Shutdown\"",
       "ssh_password": "vagrant",
       "ssh_username": "vagrant",
-      "ssh_wait_timeout": "4h",
+      "ssh_timeout": "4h",
       "type": "virtualbox-iso",
       "vboxmanage": [
         [
@@ -64,18 +64,6 @@
           "{{.Name}}",
           "--vrdeport",
           "13389"
-        ],
-        [
-          "modifyvm",
-          "{{.Name}}",
-          "--vcpenabled",
-          "off"
-        ],
-        [
-          "modifyvm",
-          "{{.Name}}",
-          "--vcpfile",
-          "windows_81.webm"
         ]
       ]
     }

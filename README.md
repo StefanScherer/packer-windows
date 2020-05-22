@@ -34,7 +34,7 @@ The following Windows versions are known to work (built with VMware Fusion Pro
 * Windows Server Core
   * Windows Server 2016 without and with Docker -> Vagrant Cloud box [StefanScherer/windows_2016_docker](https://app.vagrantup.com/StefanScherer/boxes/windows_2016_docker)
   * Windows Server 2019 without and with Docker -> Vagrant Cloud box [StefanScherer/windows_2019_docker](https://app.vagrantup.com/StefanScherer/boxes/windows_2019_docker)
-  * Windows Server 1709, 1803, 1809, and 1903 all without and with Docker
+  * Windows Server 1709, 1803, 1809, 1903, 1909, and 2004 all without and with Docker
   * Windows Server InsiderPreview Semi-Annual without and with Docker
 
 You may find other packer template files, but older versions of Windows doesn't
@@ -133,6 +133,25 @@ uncommenting the `WITHOUT WINDOWS UPDATES` section in `Autounattend.xml`:
 
 Doing so will give you hours back in your day, which is a good thing.
 
+### Windows 7 support
+
+Windows 7 is going out of support in January 2020, and the scripts for building Windows 7 machines are only
+sporadically maintained.
+
+Windows 7 was first released in 2009. This means there are a lot of updates available for Windows 7,
+and running Windows Updates on a Windows 7 box using the mechanism described above takes an extremely long time.
+
+The Windows 7 templates therefore take a slightly different approach, first installing Service Pack 1,
+updating the servicing stack and then installing the latest update rollup, .NET 4.8 and PowerShell 5.1.
+Finally, any missing updates are installed using Ansible.
+
+This means you'll need to install Ansible on your machine if you want to run the Windows 7 scripts.
+You can [install ansible on a Linux machine](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html).
+
+If you want to run these scripts on a Windows machine, you can try to run Ansible in cygwin or Bash on Ubuntu on Windows.
+Alternatively, you can disable the `ansible` steps in the `windows_7.json` file. Make sure to manually run
+Windows Update if you do!
+
 ### WinRM
 
 These boxes use WinRM. There is no OpenSSH installed.
@@ -167,6 +186,40 @@ hyperv-iso output will be in this color.
 * Secondary Dvd image does not exist: CreateFile ./iso/windows_server_insider_unattend.iso: The system cannot find the file specified.
 ```
 
+### KVM/qemu support
+
+If you are using Linux and have KVM/qemu configured, you can use these packerfiles to build a KVM virtual machine.
+To build a KVM/qemu box, first make sure:
+
+* You are a member of the kvm group on your machine. You can list the groups you are member of by running `groups`. It should
+  include the `kvm` group. If you're not a member, run `sudo usermod -aG kvm $(whoami)` to add yourself.
+* You have downloaded [the iso image with the Windows drivers for paravirtualized KVM/qemu hardware](https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/stable-virtio/virtio-win.iso).
+  You can do this from the command line: `wget -nv -nc https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/stable-virtio/virtio-win.iso -O virtio-win.iso`.
+
+You can use the following sample command to build a KVM/qemu box:
+
+```
+packer build --only=qemu --var virtio_win_iso=./virtio-win.iso ./windows_2019_docker.json
+```
+
+### Parallels support
+
+In case you're using Parallels, you can now build the `Windows Server 2019 with Docker` VM.
+
+Prerequisites:
+* Parallels Pro or Business, version 11 and up.
+* Vagrant Parallels Provider: https://github.com/Parallels/vagrant-parallels
+
+You can use the following sample command to build a Parallels VM:
+
+```
+packer build --only=parallels-iso windows_2019_docker.json
+```
+
+
+The Parallels builder config turns `efi boot` off in order to use the same answer file like all the other builders. If you find you need to turn `efi boot` on then make sure to adjust the appropriate answer file, especially the section regarding the partitioning of the disk.
+If you need to further customize the VM, consult the documentation at https://www.packer.io/docs/builders/parallels-iso.html. 
+
 ### Using .box Files With Vagrant
 
 The generated box files include a Vagrantfile template that is suitable for use
@@ -182,4 +235,4 @@ vagrant up --provider hyperv
 
 ### Contributing
 
-Pull requests welcomed, but normally should go to Joe's repo.
+Pull request are welcome!

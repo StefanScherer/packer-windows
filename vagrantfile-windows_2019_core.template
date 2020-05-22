@@ -58,4 +58,9 @@ Vagrant.configure("2") do |config|
         v.maxmemory = 2048
         v.linked_clone = true
     end
+    
+    config.vm.provider :libvirt do |libvirt|
+        libvirt.memory = 2048
+        libvirt.cpus = 2
+    end
 end

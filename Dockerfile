@@ -1,9 +1,9 @@
-FROM mcr.microsoft.com/windows:ltsc2019 AS makeiso
+FROM mcr.microsoft.com/windows:1809 AS makeiso
 WORKDIR C:/source
 COPY . .
 RUN powershell -NoProfile -ExecutionPolicy unrestricted -file make_unattend_iso.ps1
 
-FROM mcr.microsoft.com/windowsservercore:ltsc2019
+FROM mcr.microsoft.com/windows/servercore:ltsc2019
 ENV chocolateyUseWindowsCompression false
 
 RUN powershell -NoProfile -ExecutionPolicy unrestricted -Command \

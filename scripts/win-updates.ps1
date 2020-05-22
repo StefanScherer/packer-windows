@@ -165,7 +165,7 @@ function Install-WindowsUpdates() {
 function Check-WindowsUpdates() {
     LogWrite "Checking For Windows Updates"
     $Username = $env:USERDOMAIN + "\" + $env:USERNAME
-    LogWrite "Script: " + $ScriptPath + "`nScript User: " + $Username + "`nStarted: " + (Get-Date).toString()
+    LogWrite "Script: $script:ScriptPath `nScript User: $Username `nStarted: $(Get-Date)"
 
     $script:UpdateSearcher = $script:UpdateSession.CreateUpdateSearcher()
     $script:successful = $FALSE

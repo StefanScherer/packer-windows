@@ -2,28 +2,65 @@
   "builders": [
     {
       "boot_wait": "2m",
+      "communicator": "winrm",
+      "winrm_password": "vagrant",
+      "winrm_timeout": "{{user `winrm_timeout`}}",
+      "winrm_username": "vagrant",
       "cpus": 2,
-      "disk_adapter_type": "lsisas1068",
-      "disk_size": 61440,
+      "disk_size": "{{user `disk_size`}}",
       "floppy_files": [
-        "./answer_files/7/Autounattend.xml",
+        "{{user `autounattend`}}",
         "./scripts/dis-updates.ps1",
         "./scripts/microsoft-updates.bat",
-        "./scripts/win-updates.ps1",
-        "./scripts/openssh.ps1"
+        "./scripts/enable-winrm.ps1"
+      ],
+      "headless": true,
+      "iso_checksum": "{{user `iso_checksum`}}",
+      "iso_checksum_type": "{{user `iso_checksum_type`}}",
+      "iso_url": "{{user `iso_url`}}",
+      "memory": 4096,
+      "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c \"Packer Shutdown\"",
+      "ssh_password": "vagrant",
+      "ssh_username": "vagrant",
+      "ssh_timeout": "8h",
+      "type": "qemu",
+      "vm_name": "{{user `vm_name`}}",
+      "accelerator": "kvm",
+      "output_directory": "windows_7-qemu",
+      "qemuargs": [
+        [ "-drive", "file=windows_7-qemu/{{ .Name }},if=virtio,cache=writeback,discard=ignore,format=qcow2,index=1" ],
+        [ "-drive", "file={{ user `virtio_win_iso` }},media=cdrom,index=3" ],
+        [ "-cpu", "host,hv_relaxed,hv_vapic,hv_spinlocks=0x2fff,hv_vpindex,hv_runtime,hv_crash,hv_time,hv_synic,hv_stimer,hv_reset" ]
+      ]
+    },
+    {
+      "boot_wait": "2m",
+      "communicator": "winrm",
+      "winrm_password": "vagrant",
+      "winrm_timeout": "{{user `winrm_timeout`}}",
+      "winrm_username": "vagrant",
+      "cpus": 2,
+      "disk_adapter_type": "lsisas1068",
+      "disk_size": "{{user `disk_size`}}",
+      "floppy_files": [
+        "{{user `autounattend`}}",
+        "./scripts/dis-updates.ps1",
+        "./scripts/microsoft-updates.bat",
+        "./scripts/enable-winrm.ps1"
       ],
       "guest_os_type": "windows7-64",
-      "headless": false,
-      "iso_checksum": "1d0d239a252cb53e466d39e752b17c28",
-      "iso_checksum_type": "md5",
-      "iso_url": "http://care.dlservice.microsoft.com/dl/download/evalx/win7/x64/EN/7600.16385.090713-1255_x64fre_enterprise_en-us_EVAL_Eval_Enterprise-GRMCENXEVAL_EN_DVD.iso",
+      "headless": "{{user `headless`}}",
+      "iso_checksum": "{{user `iso_checksum`}}",
+      "iso_checksum_type": "{{user `iso_checksum_type`}}",
+      "iso_url": "{{user `iso_url`}}",
       "memory": 2048,
       "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c \"Packer Shutdown\"",
       "ssh_password": "vagrant",
       "ssh_username": "vagrant",
-      "ssh_wait_timeout": "8h",
+      "ssh_timeout": "8h",
       "tools_upload_flavor": "windows",
       "type": "vmware-iso",
+      "vm_name": "{{user `vm_name`}}",
       "vmx_data": {
         "RemoteDisplay.vnc.enabled": "false",
         "RemoteDisplay.vnc.port": "5900"
@@ -34,26 +71,30 @@
     },
     {
       "boot_wait": "2m",
+      "communicator": "winrm",
+      "winrm_password": "vagrant",
+      "winrm_timeout": "{{user `winrm_timeout`}}",
+      "winrm_username": "vagrant",
       "cpus": 2,
-      "disk_size": 61440,
+      "disk_size": "{{user `disk_size`}}",
       "floppy_files": [
-        "./answer_files/7/Autounattend.xml",
+        "{{user `autounattend`}}",
         "./scripts/dis-updates.ps1",
         "./scripts/microsoft-updates.bat",
-        "./scripts/win-updates.ps1",
-        "./scripts/openssh.ps1"
+        "./scripts/enable-winrm.ps1"
       ],
       "guest_os_type": "Windows7_64",
-      "headless": false,
-      "iso_checksum": "1d0d239a252cb53e466d39e752b17c28",
-      "iso_checksum_type": "md5",
-      "iso_url": "http://care.dlservice.microsoft.com/dl/download/evalx/win7/x64/EN/7600.16385.090713-1255_x64fre_enterprise_en-us_EVAL_Eval_Enterprise-GRMCENXEVAL_EN_DVD.iso",
+      "headless": "{{user `headless`}}",
+      "iso_checksum": "{{user `iso_checksum`}}",
+      "iso_checksum_type": "{{user `iso_checksum_type`}}",
+      "iso_url": "{{user `iso_url`}}",
       "memory": 2048,
       "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c \"Packer Shutdown\"",
       "ssh_password": "vagrant",
       "ssh_username": "vagrant",
-      "ssh_wait_timeout": "8h",
+      "ssh_timeout": "8h",
       "type": "virtualbox-iso",
+      "vm_name": "{{user `vm_name`}}",
       "vboxmanage": [
         [
           "modifyvm",
@@ -72,18 +113,6 @@
           "{{.Name}}",
           "--vrdeport",
           "13389"
-        ],
-        [
-          "modifyvm",
-          "{{.Name}}",
-          "--vcpenabled",
-          "off"
-        ],
-        [
-          "modifyvm",
-          "{{.Name}}",
-          "--vcpfile",
-          "windows_7.webm"
         ]
       ]
     }
@@ -98,20 +127,115 @@
   ],
   "provisioners": [
     {
-      "execute_command": "{{.Vars}} cmd /c C:/Windows/Temp/script.bat",
-      "remote_path": "/tmp/script.bat",
+      "script": "./scripts/win-7-update-sp1.ps1",
+      "type": "powershell"
+    },
+    {
+      "type": "windows-restart",
+      "restart_timeout": "{{user `restart_timeout`}}"
+    },
+    {
+      "script": "./scripts/win-7-update-2019-03-servicing-stack.ps1",
+      "type": "powershell"
+    },
+    {
+      "type": "windows-restart",
+      "restart_timeout": "{{user `restart_timeout`}}"
+    },
+    {
+      "script": "./scripts/win-7-update-2019-09-sha2.ps1",
+      "type": "powershell"
+    },
+    {
+      "type": "windows-restart",
+      "restart_timeout": "{{user `restart_timeout`}}"
+    },
+    {
+      "script": "./scripts/win-7-update-2019-09-servicing-stack.ps1",
+      "type": "powershell"
+    },
+    {
+      "type": "windows-restart",
+      "restart_timeout": "{{user `restart_timeout`}}"
+    },
+    {
+      "script": "./scripts/win-7-update-2016-convenience-rollup.ps1",
+      "type": "powershell"
+    },
+    {
+      "type": "windows-restart",
+      "restart_timeout": "{{user `restart_timeout`}}"
+    },
+    {
+      "script": "./scripts/win-7-update-2019-10-update-rollup.ps1",
+      "type": "powershell"
+    },
+    {
+      "type": "windows-restart",
+      "restart_timeout": "{{user `restart_timeout`}}"
+    },
+    {
+      "script": "./scripts/win-7-update-net48.ps1",
+      "type": "powershell"
+    },
+    {
+      "type": "windows-restart",
+      "restart_timeout": "{{user `restart_timeout`}}"
+    },
+    {
+      "script": "./scripts/win-7-update-powershell-5.1.ps1",
+      "type": "powershell"
+    },
+    {
+      "type": "windows-restart",
+      "restart_timeout": "{{user `restart_timeout`}}"
+    },
+    {
+      "type": "ansible",
+      "playbook_file": "./ansible/windows_update_security_updates.yml",
+      "extra_arguments": [
+        "--extra-vars", "ansible_shell_type=powershell ansible_shell_executable=None",
+        "--connection", "packer"
+      ]
+    },
+    {
+      "type": "windows-restart",
+      "restart_timeout": "{{user `restart_timeout`}}"
+    },
+    {
+      "type": "ansible",
+      "playbook_file": "./ansible/windows_update.yml",
+      "extra_arguments": [
+        "--extra-vars", "ansible_shell_type=powershell ansible_shell_executable=None",
+        "--connection", "packer"
+      ]
+    },
+    {
+      "type": "windows-restart",
+      "restart_timeout": "{{user `restart_timeout`}}"
+    },
+    {
       "scripts": [
         "./scripts/vm-guest-tools.bat",
-        "./scripts/chef.bat",
-        "./scripts/vagrant-ssh.bat",
         "./scripts/enable-rdp.bat",
         "./scripts/enable-winrm.bat",
-        "./scripts/disable-tasks.bat",
         "./scripts/compile-dotnet-assemblies.bat",
         "./scripts/compact.bat"
       ],
-      "type": "shell"
+      "type": "windows-shell"
     }
-  ]
+  ],
+  "variables": {
+    "autounattend": "./answer_files/7/Autounattend.xml",
+    "disk_size": "61440",
+    "headless": "false",
+    "iso_checksum": "1d0d239a252cb53e466d39e752b17c28",
+    "iso_checksum_type": "md5",
+    "iso_url": "http://care.dlservice.microsoft.com/dl/download/evalx/win7/x64/EN/7600.16385.090713-1255_x64fre_enterprise_en-us_EVAL_Eval_Enterprise-GRMCENXEVAL_EN_DVD.iso",
+    "restart_timeout": "20m",
+    "winrm_timeout": "6h",
+    "vm_name": "windows_7",
+    "virtio_win_iso": "~/virtio-win.iso"
+  }
 }
 

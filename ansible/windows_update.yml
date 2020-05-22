@@ -1,0 +1,9 @@
+- hosts: all
+  tasks:
+  - name: Install only security updates
+    win_updates:
+      category_names:
+      - SecurityUpdates
+      - CriticalUpdates
+      - UpdateRollups
+      use_scheduled_task: yes

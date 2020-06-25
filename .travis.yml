@@ -39,8 +39,12 @@ install:
 - cat /proc/cpuinfo
 
 script:
+# Ping stdout every 9 minutes to prevent Travis from terminating the buidl.
+- |
+  while sleep 9m; do
+    echo "====[ This job has been running for $SECONDS ]===="
+  done &
 # Download the virtio-win iso
 - wget -nv -nc https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/stable-virtio/virtio-win.iso -O ~/virtio-win.iso
-- export PACKER_LOG=1
 # See here https://github.com/travis-ci/travis-ci/issues/1839 for background on the sudo sudo command
 - sudo -E su $USER -c 'packer build --only=${PROVIDER} --var virtio_win_iso=~/virtio-win.iso --var memory_size=6144 --var disk_size=30720 ${TEMPLATE}.json'

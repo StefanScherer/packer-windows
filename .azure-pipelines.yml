@@ -35,5 +35,8 @@ jobs:
       # Set PACKER_LOG to 1 to troubleshoot infrastructure issues
       # export PACKER_LOG=1
       export PACKER_CACHE_DIR=$(Agent.BuildDirectory)/packer_cache/
+      # See https://github.com/ansible/ansible/issues/49207
+      # See https://github.com/ansible/ansible/issues/32499
+      export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES
       packer build --only=virtualbox-iso --var virtio_win_iso=$(Agent.BuildDirectory)/virtio-win.iso $(template).json
     displayName: Build box

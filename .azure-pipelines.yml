@@ -6,8 +6,8 @@ jobs:
   strategy:
     maxParallel: 4
     matrix: 
-      windows_7:
-        template: windows_7
+      windows_10:
+        template: windows_10
   steps:
   - bash: |
       wget -nv -nc -O packer_1.6.0_darwin_amd64.zip https://releases.hashicorp.com/packer/1.6.0/packer_1.6.0_darwin_amd64.zip
@@ -29,14 +29,11 @@ jobs:
       df -h .
     displayName: Dump software version
   - bash: |
-      wget -nv -nc https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/stable-virtio/virtio-win.iso -O $(Agent.BuildDirectory)/virtio-win.iso
-    displayName: Download virtio-win iso
-  - bash: |
       # Set PACKER_LOG to 1 to troubleshoot infrastructure issues
       # export PACKER_LOG=1
       export PACKER_CACHE_DIR=$(Agent.BuildDirectory)/packer_cache/
       # See https://github.com/ansible/ansible/issues/49207
       # See https://github.com/ansible/ansible/issues/32499
       export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES
-      packer build --only=virtualbox-iso --var virtio_win_iso=$(Agent.BuildDirectory)/virtio-win.iso $(template).json
+      packer build --only=virtualbox-iso --var memory_size=6144 --var disk_size=30720 $(template).json
     displayName: Build box

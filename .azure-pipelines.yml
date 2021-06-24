@@ -1,0 +1,39 @@
+jobs:
+- job: build
+  pool:
+    vmImage: 'macOS-10.15'
+  timeoutInMinutes: 300
+  strategy:
+    maxParallel: 4
+    matrix: 
+      windows_10:
+        template: windows_10
+  steps:
+  - bash: |
+      wget -nv -nc -O packer_1.6.0_darwin_amd64.zip https://releases.hashicorp.com/packer/1.6.0/packer_1.6.0_darwin_amd64.zip
+      sudo unzip -o packer_1.6.0_darwin_amd64.zip -d /usr/local/bin
+    displayName: Install Packer
+  - bash: |
+      pip install --user ansible
+      pip install pywinrm
+      ln -s /Users/runner/Library/Python/2.7/bin/ansible /usr/local/bin/ansible
+      ln -s /Users/runner/Library/Python/2.7/bin/ansible-playbook /usr/local/bin/ansible-playbook
+    displayName: Install Ansible
+  - bash: |
+      packer --version
+      ansible --version
+      ansible-playbook --version
+      vboxmanage --version
+      sysctl -a | grep machdep.cpu
+      sysctl -a | grep mem
+      df -h .
+    displayName: Dump software version
+  - bash: |
+      # Set PACKER_LOG to 1 to troubleshoot infrastructure issues
+      # export PACKER_LOG=1
+      export PACKER_CACHE_DIR=$(Agent.BuildDirectory)/packer_cache/
+      # See https://github.com/ansible/ansible/issues/49207
+      # See https://github.com/ansible/ansible/issues/32499
+      export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES
+      packer build --only=virtualbox-iso --var memory_size=6144 --var disk_size=30720 $(template).json
+    displayName: Build box

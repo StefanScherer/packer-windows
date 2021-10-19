@@ -4,7 +4,7 @@ dist: focal
 
 jobs:
     include:
-    - env: PROVIDER=qemu TEMPLATE=windows_10 VIRT_GROUP=kvm PACKER_VERSION=1.7.6 PACKER_LOG=1
+    - env: PROVIDER=qemu TEMPLATE=windows_10 VIRT_GROUP=kvm PACKER_VERSION=1.6.0 PACKER_LOG=1
 
 install:
 # Install Packer.

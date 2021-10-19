@@ -18,8 +18,7 @@
         "./scripts/win-updates.ps1"
       ],
       "headless": true,
-      "iso_checksum": "{{user `iso_checksum`}}",
-      "iso_url": "{{user `iso_url`}}",      
+      "iso_checksum": "{{user `iso_checksum`}}"
       "memory": "{{user `memory`}}",
       "output_directory": "windows_10-qemu",
       "qemuargs": [

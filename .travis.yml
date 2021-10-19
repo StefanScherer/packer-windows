@@ -1,15 +1,15 @@
 sudo: true
 language: bash
-dist: bionic
+dist: focal
 
 jobs:
     include:
-    - env: PROVIDER=qemu TEMPLATE=windows_10 VIRT_GROUP=kvm
+    - env: PROVIDER=qemu TEMPLATE=windows_10 VIRT_GROUP=kvm PACKER_VERSION=1.7.6 PACKER_LOG=1
 
 install:
-# Install Packer. Travis ships with Packer 1.3, which is fairly old
-- wget -nv -nc -O packer_1.6.0_linux_amd64.zip https://releases.hashicorp.com/packer/1.6.0/packer_1.6.0_linux_amd64.zip
-- sudo unzip -o packer_1.6.0_linux_amd64.zip -d /usr/local/bin
+# Install Packer.
+- wget -nv -nc -O packer_${PACKER_VERSION}_linux_amd64.zip https://releases.hashicorp.com/packer/${PACKER_VERSION}/packer_${PACKER_VERSION}_linux_amd64.zip
+- sudo unzip -o packer_${PACKER_VERSION}_linux_amd64.zip -d /usr/local/bin
 
 # Install ansible
 - sudo add-apt-repository -y ppa:ansible/ansible

@@ -57,6 +57,26 @@
         </component>
         
         <component xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="Microsoft-Windows-Setup" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS">
+
+            <!-- Run SynchronousCommand at the installation of windows -->
+            <RunSynchronous>
+
+                <!-- Bypass TPM Check -->
+                <RunSynchronousCommand wcm:action="add">
+                    <Description>Bypass TPM Check</Description>
+                    <Order>1</Order>
+                    <Path>reg add HKLM\SYSTEM\Setup\LabConfig /t REG_DWORD /v BypassTPMCheck /d 1 /f</Path>
+                </RunSynchronousCommand>
+                
+                <!-- Bypass Secure Boot Check -->
+                <RunSynchronousCommand wcm:action="add">
+                    <Description>Bypass Secure Boot Check</Description>
+                    <Order>2</Order>
+                    <Path>reg add HKLM\SYSTEM\Setup\LabConfig /t REG_DWORD /v BypassSecureBootCheck /d 1 /f</Path>
+                </RunSynchronousCommand>
+
+            </RunSynchronous>
+
             <DiskConfiguration>
                 <Disk wcm:action="add">
                     <CreatePartitions>

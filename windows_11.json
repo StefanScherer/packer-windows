@@ -1,13 +1,7 @@
 {
   "builders": [
     {
-      "boot_command": [
-        "<leftShiftOn><f10><leftShiftOff><wait>",
-        "reg add HKLM\\SYSTEM\\Setup\\LabConfig /t REG_DWORD /v BypassTPMCheck /d 1<return>",
-        "reg add HKLM\\SYSTEM\\Setup\\LabConfig /t REG_DWORD /v BypassSecureBootCheck /d 1<return><wait>",
-        "exit<return>",
-        "<wait><return>"
-      ],
+      "boot_command": "",
       "boot_wait": "2m",
       "communicator": "winrm",
       "configuration_version": "8.0",
@@ -35,13 +29,7 @@
       "winrm_username": "vagrant"
     },
     {
-      "boot_command": [
-        "<leftShiftOn><f10><leftShiftOff><wait>",
-        "reg add HKLM\\SYSTEM\\Setup\\LabConfig /t REG_DWORD /v BypassTPMCheck /d 1<return>",
-        "reg add HKLM\\SYSTEM\\Setup\\LabConfig /t REG_DWORD /v BypassSecureBootCheck /d 1<return><wait>",
-        "exit<return>",
-        "<wait><return>"
-      ],
+      "boot_command": "",
       "boot_wait": "2m",
       "communicator": "winrm",
       "cpus": 2,
@@ -78,13 +66,7 @@
       "winrm_username": "vagrant"
     },
     {
-      "boot_command": [
-        "<leftShiftOn><f10><leftShiftOff><wait>",
-        "reg add HKLM\\SYSTEM\\Setup\\LabConfig /t REG_DWORD /v BypassTPMCheck /d 1<return>",
-        "reg add HKLM\\SYSTEM\\Setup\\LabConfig /t REG_DWORD /v BypassSecureBootCheck /d 1<return><wait>",
-        "exit<return>",
-        "<wait><return>"
-      ],
+      "boot_command": "",
       "boot_wait": "2m",
       "communicator": "winrm",
       "cpus": 2,
@@ -112,13 +94,7 @@
       "winrm_username": "vagrant"
     },
     {
-      "boot_command": [
-        "<leftShiftOn><f10><leftShiftOff><wait>",
-        "reg add HKLM\\SYSTEM\\Setup\\LabConfig /t REG_DWORD /v BypassTPMCheck /d 1<return>",
-        "reg add HKLM\\SYSTEM\\Setup\\LabConfig /t REG_DWORD /v BypassSecureBootCheck /d 1<return><wait>",
-        "exit<return>",
-        "<wait><return>"
-      ],
+      "boot_command": "",
       "boot_wait": "2m",
       "communicator": "winrm",
       "cpus": 2,

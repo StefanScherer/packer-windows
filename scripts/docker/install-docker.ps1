@@ -29,7 +29,7 @@ if ($zip_url) {
   [Environment]::SetEnvironmentVariable("Path", $env:Path + ";$($env:ProgramFiles)\docker", [EnvironmentVariableTarget]::Machine)
   $env:Path = $env:Path + ";$($env:ProgramFiles)\docker"
   Write-Output "Registering docker service ..."
-  . dockerd --register-service
+  Start-Process -FilePath "$($env:ProgramFiles)\docker\dockerd.exe" -ArgumentList "--register-service" -NoNewWindow -Wait
 }
 else {
   Write-Output "Use get.mirantis.com/install.ps1 ..."

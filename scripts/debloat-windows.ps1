@@ -16,14 +16,13 @@ else {
   #. $env:TEMP\Debloat-Windows-10-master\scripts\disable-services.ps1
   Write-Output 'Disable Windows Defender'
   if ($(Get-ItemProperty "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion").ProductName.StartsWith("Windows 10")) {
-    #. $env:TEMP\Debloat-Windows-10-master\scripts\disable-windows-defender.ps1
-    . "$(Split-Path $PSScriptRoot)\submodules\Debloat-Windows-10\scripts\disable-windows-defender.ps1"
+    . "A:\disable-windows-defender.ps1"
   }
   else {
     Uninstall-WindowsFeature Windows-Defender
   }
   Write-Output 'Optimize Windows Update'
-  . "$(Split-Path $PSScriptRoot)\submodules\Debloat-Windows-10\scripts\optimize-windows-update.ps1"
+  . "A:\optimize-windows-update.ps1"
   #Write-Output Disable Windows Update
   #Set-Service wuauserv -StartupType Disabled
   #Write-Output Remove OneDrive

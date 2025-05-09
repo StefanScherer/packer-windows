@@ -1,8 +1,8 @@
 ﻿if ($env:PACKER_BUILDER_TYPE -And $($env:PACKER_BUILDER_TYPE).startsWith("hyperv")) {
-  Write-Output Skip debloat steps in Hyper-V build.
+  Write-Output 'Skip debloat steps in Hyper-V build'
 }
 else {
-  Write-Output Downloading debloat zip
+  Write-Output 'Downloading debloat zip'
   [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
   $url = "https://github.com/StefanScherer/Debloat-Windows-10/archive/master.zip"
   (New-Object System.Net.WebClient).DownloadFile($url, "$env:TEMP\debloat.zip")
@@ -14,14 +14,14 @@ else {
   #. $env:TEMP\Debloat-Windows-10-master\scripts\block-telemetry.ps1
   #Write-Output Disable services
   #. $env:TEMP\Debloat-Windows-10-master\scripts\disable-services.ps1
-  Write-Output Disable Windows Defender
+  Write-Output 'Disable Windows Defender'
   if ($(Get-ItemProperty "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion").ProductName.StartsWith("Windows 10")) {
     . $env:TEMP\Debloat-Windows-10-master\scripts\disable-windows-defender.ps1
   }
   else {
     Uninstall-WindowsFeature Windows-Defender
   }
-  Write-Output Optimize Windows Update
+  Write-Output 'Optimize Windows Update'
   . $env:TEMP\Debloat-Windows-10-master\scripts\optimize-windows-update.ps1
   #Write-Output Disable Windows Update
   #Set-Service wuauserv -StartupType Disabled

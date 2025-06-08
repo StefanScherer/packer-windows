@@ -1,0 +1,4 @@
+[submodule "submodules/Debloat-Windows-10"]
+	path = submodules/Debloat-Windows-10
+	url = https://github.com/JunielKatarn/Debloat-Windows-10.git
+	branch = win11-2025

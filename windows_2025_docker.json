@@ -80,7 +80,10 @@
         "./scripts/docker/enable-winrm.ps1",
         "./scripts/docker/2016/install-containers-feature.ps1",
         "./scripts/microsoft-updates.bat",
-        "./scripts/win-updates.ps1"
+        "./scripts/win-updates.ps1",
+        "./submodules/Debloat-Windows-10/scripts/disable-windows-defender.ps1",
+        "./submodules/Debloat-Windows-10/scripts/optimize-windows-update.ps1",
+        "./submodules/Debloat-Windows-10/lib/force-mkdir.psm1"
       ],
       "guest_os_type": "windows9srv-64",
       "headless": "{{user `headless`}}",

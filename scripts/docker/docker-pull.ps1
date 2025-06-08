@@ -10,7 +10,7 @@ function DockerPull {
     return
   }
 
-  Write-Output Installing $image ...
+  Write-Output "Installing $image ..."
   $j = Start-Job -ScriptBlock { docker pull $args[0] } -ArgumentList "$image"
   while ( $j.JobStateInfo.state -ne "Completed" -And $j.JobStateInfo.state -ne "Failed" ) {
     Write-Output $j.JobStateInfo.state
@@ -28,7 +28,7 @@ function DockerRun {
     return
   }
 
-  Write-Output Run first container from $image ...
+  Write-Output "Run first container from $image ..."
   docker run --rm $image cmd
 }
 

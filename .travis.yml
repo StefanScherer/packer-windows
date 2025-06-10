@@ -1,0 +1,59 @@
+sudo: true
+language: bash
+dist: focal
+
+jobs:
+    include:
+    - env: PROVIDER=qemu TEMPLATE=windows_10 VIRT_GROUP=kvm PACKER_VERSION=1.6.0 PACKER_LOG=1
+
+install:
+# Install Packer.
+- wget -nv -nc -O packer_${PACKER_VERSION}_linux_amd64.zip https://releases.hashicorp.com/packer/${PACKER_VERSION}/packer_${PACKER_VERSION}_linux_amd64.zip
+- sudo unzip -o packer_${PACKER_VERSION}_linux_amd64.zip -d /usr/local/bin
+
+# Install ansible
+- sudo add-apt-repository -y ppa:ansible/ansible
+- sudo apt-get update
+- sudo apt-get install -yq --no-install-suggests --no-install-recommends ansible
+- pip install pywinrm
+
+# Install qemu-kvm
+- if [ $PROVIDER == "qemu" ]; then sudo apt-get install -yq --no-install-suggests --no-install-recommends qemu-kvm qemu-utils; fi
+
+# Set up group membership
+- sudo adduser $USER $VIRT_GROUP
+
+# Dump versions of available software
+- lsb_release -a
+- uname -r
+- if [ $PROVIDER == "qemu" ]; then qemu-system-x86_64 --version; fi
+- packer --version
+- ansible --version
+
+# Dump group membership
+- groups
+- sudo sudo -u $USER -g $VIRT_GROUP groups
+- sudo -E su $USER -c 'groups'
+
+# Dump CPU information
+- cat /proc/cpuinfo
+
+script:
+# Ping stdout every 9 minutes to prevent Travis from terminating the buidl.
+- |
+  while sleep 9m; do
+    echo "====[ This job has been running for $SECONDS ]===="
+  done &
+# Download the virtio-win iso
+- wget -nv -nc https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/stable-virtio/virtio-win.iso -O ~/virtio-win.iso
+# See here https://github.com/travis-ci/travis-ci/issues/1839 for background on the sudo sudo command
+- sudo -E su $USER -c 'packer build --only=${PROVIDER} --var virtio_win_iso=~/virtio-win.iso --var memory_size=6144 --var disk_size=30720 ${TEMPLATE}.json'
+
+after_success:
+# Upload the resulting box to Azure Storage
+- |
+  sha256sum ${TEMPLATE}_libvirt.box
+  az storage blob upload --auth-mode=key --account-name=${AZURE_STORAGE_ACCOUNT} --account-key=${AZURE_STORAGE_KEY} --container-name boxes --file ${TEMPLATE}_libvirt.box --name ${TRAVIS_JOB_ID}/${TEMPLATE}_libvirt.box
+  echo "The box has been uploaded to Azure Storage:"
+  echo "URL: https://${AZURE_STORAGE_ACCOUNT}.blob.core.windows.net/boxes/${TRAVIS_JOB_ID}/${TEMPLATE}_virtualbox.box"
+  echo "SHA256: `shasum -a 256 ${TEMPLATE}_virtualbox.box`"

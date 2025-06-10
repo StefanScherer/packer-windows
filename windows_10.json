@@ -19,17 +19,13 @@
       ],
       "headless": true,
       "iso_checksum": "{{user `iso_checksum`}}",
-      "iso_url": "{{user `iso_url`}}",      
+      "iso_url": "{{user `iso_url`}}",
       "memory": "{{user `memory`}}",
       "output_directory": "windows_10-qemu",
       "qemuargs": [
         [
           "-drive",
           "file=windows_10-qemu/{{ .Name }},if=virtio,cache=writeback,discard=ignore,format=qcow2,index=1"
-        ],
-        [
-          "-drive",
-          "file={{ user `iso_url` }},media=cdrom,index=2"
         ],
         [
           "-drive",
